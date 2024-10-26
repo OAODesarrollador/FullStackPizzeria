@@ -1,4 +1,3 @@
-// src/routes/tareaRoutes.ts
 import { Router, Request, Response, NextFunction } from 'express';
 import { obtenerTareas, crearTarea, actualizarTarea } from '../controladores/tareaControlador';
 import { autenticarUsuario, CustomRequest } from '../middlewares/authMiddlewares';

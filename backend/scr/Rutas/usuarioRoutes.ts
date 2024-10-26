@@ -6,7 +6,6 @@ const router = Router();
 
 // Registro de nuevo usuario
 
-//router.post('/registro', registrarUsuario);
 router.post('/registro',  (req, res, next) =>  registrarUsuario (req, res).then(() => next()));
 // Login de usuario
 

@@ -1,4 +1,3 @@
-// src/routes/pedidoRoutes.ts
 import { Router } from 'express';
 import { obtenerPedidos, crearPedido } from '../controladores/pedidoControlador';
 

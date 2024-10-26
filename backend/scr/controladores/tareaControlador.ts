@@ -1,4 +1,3 @@
-// src/controladores/tareaControlador.ts
 import { Response, NextFunction } from 'express';
 import { crearTarea as crearTareaModel, obtenerTareasPorRepartidor, obtenerTodasLasTareas, actualizarEstadoTarea } from '../Modelos/Tarea';
 import { CustomRequest } from '../middlewares/authMiddlewares';
