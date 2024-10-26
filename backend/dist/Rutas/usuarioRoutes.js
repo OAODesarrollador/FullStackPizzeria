@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { registrarUsuario, loginUsuario } from '../controladores/usuarioControlador.js';
+import { registrarUsuario, loginUsuario } from '../controladores/usuarioControlador';
 const router = Router();
 // Registro de nuevo usuario
 //router.post('/registro', registrarUsuario);

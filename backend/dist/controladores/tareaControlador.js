@@ -1,19 +1,16 @@
-import { crearTarea as crearTareaModel, obtenerTareasPorRepartidor, obtenerTodasLasTareas, actualizarEstadoTarea } from '../Modelos/Tarea.js';
-// Controlador para obtener tareas
+import { crearTarea as crearTareaModel, obtenerTareasPorRepartidor, obtenerTodasLasTareas, actualizarEstadoTarea } from '../Modelos/Tarea';
 export const obtenerTareas = async (req, res, next) => {
     try {
-        const { rol, id } = req.usuario; // Usuario autenticado ya debe estar en req.usuario gracias al middleware
-        let tareas;
-        if (rol === 'SUPERVISOR') {
-            tareas = await obtenerTareasPorRepartidor(id);
+        if (!req.usuario) {
+            res.status(403).json({ mensaje: 'Acceso no autorizado' });
+            return;
         }
-        else {
-            tareas = await obtenerTodasLasTareas();
-        }
+        const { rol, id } = req.usuario;
+        const tareas = rol === 'SUPERVISOR' ? await obtenerTodasLasTareas() : await obtenerTareasPorRepartidor(id);
         res.status(200).json(tareas);
     }
     catch (error) {
-        next(error); // Pasa cualquier error al siguiente middleware
+        next(error);
     }
 };
 // Controlador para crear tarea

@@ -1,35 +1,30 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
-// Crear un pedido
-export const crearPedido = async (req, res) => {
-    const { descripcion, total, direccionEnvio } = req.body;
-    if (!req.usuario || !req.usuario.id) {
-        return res.status(400).json({ error: 'Usuario no autenticado' });
-    }
-    const { id: usuarioId } = req.usuario;
+import { crearTarea as crearPedidoModel, obtenerTareasPorRepartidor, obtenerTodasLasTareas } from '../Modelos/Tarea';
+export const obtenerPedidos = async (req, res, next) => {
     try {
-        const nuevoPedido = await prisma.pedido.create({
-            data: {
-                descripcion,
-                total,
-                direccionEnvio,
-                estado: 'NUEVO',
-                usuarioId,
-            },
-        });
-        res.status(201).json({ pedido: nuevoPedido });
+        const { rol, id } = req.usuario;
+        let tareas;
+        if (rol === 'REPARTIDOR') {
+            tareas = await obtenerTareasPorRepartidor(id);
+        }
+        else if (rol === 'SUPERVISOR') {
+            tareas = await obtenerTodasLasTareas();
+        }
+        else {
+            return res.status(403).json({ mensaje: 'No tienes permiso para ver estas tareas.' });
+        }
+        res.status(200).json(tareas);
     }
     catch (error) {
-        res.status(500).json({ error: 'Error al crear el pedido o la tarea' });
+        next(error);
     }
 };
-// Obtener todos los pedidos
-export const obtenerPedidos = async (req, res) => {
+export const crearPedido = async (req, res, next) => {
     try {
-        const pedidos = await prisma.pedido.findMany();
-        res.json(pedidos);
+        const { descripcion, repartidorId } = req.body;
+        const nuevoPedido = await crearPedidoModel(descripcion, repartidorId);
+        res.status(201).json(nuevoPedido);
     }
     catch (error) {
-        res.status(500).json({ error: 'Error al obtener los pedidos' });
+        next(error);
     }
 };

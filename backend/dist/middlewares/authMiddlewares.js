@@ -6,9 +6,9 @@ export const autenticarUsuario = (req, res, next) => {
         return;
     }
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.usuario = decoded; // Asignamos el usuario decodificado a req.usuario
-        next(); // Si todo va bien, llamamos a next para pasar al siguiente middleware o controlador
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'mi_super_secreto');
+        req.usuario = decoded;
+        next();
     }
     catch (error) {
         res.status(400).json({ mensaje: 'Token inválido.' });
