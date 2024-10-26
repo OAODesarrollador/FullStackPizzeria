@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id       Int      @id @default(autoincrement())
+  nombre   String
+  email    String   @unique
+  password String
+  rol      Rol      @default(REPARTIDOR)// El rol que mencionaste: repartidor o supervisor
+  
+  // Relación inversa con Pedido
+  pedidos  Pedido[]  // Un usuario puede tener muchos pedidos
+
+  // Relación inversa con Tarea (solo para repartidores)
+  tareas   Tarea[]  // Un repartidor puede tener muchas tareas
+}
+
+model Pedido {
+  id             Int      @id @default(autoincrement())
+  descripcion    String   // Asegúrate de que este campo está en el modelo
+  total          Float    // Agrega un campo para el total
+  direccionEnvio String   // Agrega un campo para la dirección de envío
+  estado         Estado
+  fecha          DateTime @default(now())
+  
+  // Relación con Usuario
+  usuarioId      Int
+  usuario        Usuario  @relation(fields: [usuarioId], references: [id])
+}
+
+
+model Tarea {
+  id           Int      @id @default(autoincrement())
+  descripcion  String
+  estado       Estado   @default(NUEVO)
+  
+  // Relación con Usuario (Repartidor)
+  repartidorId Int
+  repartidor   Usuario @relation(fields: [repartidorId], references: [id])
+}
+
+enum Rol {
+  REPARTIDOR
+  SUPERVISOR
+}
+
+enum Estado {
+  NUEVO
+  EN_PROCESO
+  TERMINADO
+}

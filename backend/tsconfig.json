@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      //"target": "ES2020",
+      //"target": "es6",
+      //"module": "commonjs",
+      "module": "ESNext",
+      "target": "ESNext",
+      "moduleResolution": "node" ,
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "./dist",
+      "typeRoots": ["./node_modules/@types", "./src/types"]
+    },
+    "include": ["**/*.ts", "src/**/*", "app.mjs", "./src"],
+    "exclude": ["node_modules", "dist"]
+  }
+  
