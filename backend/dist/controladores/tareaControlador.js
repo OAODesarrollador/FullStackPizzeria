@@ -1,4 +1,4 @@
-import { crearTarea as crearTareaModel, obtenerTareasPorRepartidor, obtenerTodasLasTareas, actualizarEstadoTarea } from '../Modelos/Tarea';
+import { crearTarea as crearTareaModel, obtenerTareasPorRepartidor, obtenerTodasLasTareas, actualizarEstadoTarea } from '../Modelos/Tarea.js';
 export const obtenerTareas = async (req, res, next) => {
     try {
         if (!req.usuario) {

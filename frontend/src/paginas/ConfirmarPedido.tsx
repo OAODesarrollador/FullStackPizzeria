@@ -12,11 +12,11 @@ const ConfirmarPedido = () => {
     e.preventDefault();
     console.log('Confirmar pedido - - - ');
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token');console.log(token);
       const headers = {
         Authorization: `Bearer ${token}`,
       };
-      console.log("token");
+      
       await axios.post(
         'http://localhost:3000/pedido',
         { descripcion, total, direccionEnvio },
@@ -24,6 +24,7 @@ const ConfirmarPedido = () => {
       );
       alert('Pedido confirmado y tarea creada!');
     } catch (error) {
+      console.error('Error al confirmar el pedido:', error);
       alert('Error al confirmar el pedido--');
     }
   };

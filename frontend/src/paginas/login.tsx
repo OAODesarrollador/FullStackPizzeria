@@ -14,7 +14,7 @@ const Login = () => {
     try {
       const { data } = await axios.post('http://localhost:3000/usuario/login', { email, password });
       localStorage.setItem('token', data.token);
-      navigate('/tareas');
+      navigate('/ListaPedidos');
     } catch (error) {
       alert('Error en el login, revisa tus credenciales');
     }

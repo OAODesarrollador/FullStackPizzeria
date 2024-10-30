@@ -4,7 +4,7 @@ import { obtenerPedidos, crearPedido } from '../controladores/pedidoControlador'
 
 const router = Router();
 
-router.post('/pedido', crearPedido as any); // Opción alternativa
-router.get('/pedido', obtenerPedidos as any);
+router.post('/crearPedido', crearPedido as any); // Opción alternativa
+router.get('/verPedidos', obtenerPedidos as any);
 
 export default router;

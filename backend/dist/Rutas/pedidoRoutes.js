@@ -1,7 +1,6 @@
-// src/routes/pedidoRoutes.ts
 import { Router } from 'express';
-import { obtenerPedidos, crearPedido } from '../controladores/pedidoControlador';
+import { obtenerPedidos, crearPedido } from '../controladores/pedidoControlador.js';
 const router = Router();
-router.post('/pedido', crearPedido); // Opción alternativa
-router.get('/pedido', obtenerPedidos);
+router.post('/crearPedido', crearPedido); // Opción alternativa
+router.get('/verPedidos', obtenerPedidos);
 export default router;

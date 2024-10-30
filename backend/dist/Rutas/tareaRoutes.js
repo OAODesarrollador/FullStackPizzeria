@@ -1,7 +1,6 @@
-// src/routes/tareaRoutes.ts
 import { Router } from 'express';
-import { obtenerTareas, crearTarea, actualizarTarea } from '../controladores/tareaControlador';
-import { autenticarUsuario } from '../middlewares/authMiddlewares';
+import { obtenerTareas, crearTarea, actualizarTarea } from '../controladores/tareaControlador.js';
+import { autenticarUsuario } from '../middlewares/authMiddlewares.js';
 const router = Router();
 const wrapAsync = (fn) => {
     return (req, res, next) => {

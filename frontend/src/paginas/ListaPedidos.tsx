@@ -11,10 +11,10 @@ interface Pedido {
 
 const ListaPedidos: React.FC = () => {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
-
+  console.log('Pasa por pedidos - Frontend');
   useEffect(() => {
     const fetchPedidos = async () => {
-      const response = await axios.get('http://localhost:3000/pedido');
+      const response = await axios.get('http://localhost:3000/pedido/verPedidos');
       console.log('Pasa por pedidos');
       setPedidos(response.data);
     };

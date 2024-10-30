@@ -7,7 +7,7 @@ import Tareas from './paginas/tareas';
 import Checkout from './paginas/Checkout';
 import ConfirmarPedido from './paginas/ConfirmarPedido'; // Importamos el componente ConfirmarPedido
 import Registro from './paginas/Registro';
-import Pedido from './componentes/ListaPedidos'
+import ListaPedidos from './paginas/ListaPedidos'
 
 const App = () => {
   return (
@@ -16,10 +16,11 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
-        <Route path="/tareas" element={<Tareas />} />
+        <Route path="/tarea" element={<Tareas />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/confirmarpedido" element={<ConfirmarPedido />} /> {/* Nueva ruta para confirmar pedido */}
-        <Route path="/pedidos" element={<Pedido />} />
+        
+        <Route path='/ListaPedidos' element={<ListaPedidos />} />
       </Routes>
     </Router>
   );
