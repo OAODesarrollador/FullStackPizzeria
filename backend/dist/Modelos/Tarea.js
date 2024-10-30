@@ -19,7 +19,6 @@ export const obtenerTodasLasTareas = async () => {
     return await prisma.tarea.findMany();
 };
 export const actualizarEstadoTarea = async (tareaId, estado) => {
-    console.log("PAsa por actualizar estado", estado);
     return await prisma.tarea.update({
         where: { id: tareaId },
         data: {

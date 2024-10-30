@@ -1,4 +1,4 @@
-import { Estado, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const crearTarea = async (descripcion: string, repartidorId: number) => {
@@ -23,7 +23,7 @@ export const obtenerTodasLasTareas = async () => {
 };
 
 export const actualizarEstadoTarea = async (tareaId: number, estado: string) => {
-  console.log("PAsa por actualizar estado", estado);
+  
   return await prisma.tarea.update({
     where: { id: tareaId },
     data:   {

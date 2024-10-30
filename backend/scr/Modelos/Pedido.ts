@@ -2,17 +2,13 @@ import { PrismaClient, Estado } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const crearPedido = async (descripcion: string, total: number, direccionEnvio: string, usuarioId: number) => {
-  console.log("Pasa por crear pedido - Backend - Pedido");
-  console.log("descripcion:", descripcion);
-  console.log("total:", total);
-  console.log("direccionEnvio:", direccionEnvio);
-  console.log("usuarioId:", usuarioId);
+ 
   const nuevoPedido = await prisma.pedido.create({
     data: {
       descripcion,  // Cambiado a 'descripcion'
-      total,
-      direccionEnvio,
-      usuarioId,
+      total: total,
+      direccionEnvio: direccionEnvio,
+      usuarioId: usuarioId,
       estado: Estado.NUEVO,
     },
   });

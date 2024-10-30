@@ -1,11 +1,6 @@
 import { PrismaClient, Estado } from '@prisma/client';
 const prisma = new PrismaClient();
 export const crearPedido = async (descripcion, total, direccionEnvio, usuarioId) => {
-    console.log("-- Pasa por crear pedido --- Pedido");
-    console.log(direccionEnvio);
-    console.log(total);
-    console.log(descripcion);
-    console.log(usuarioId);
     const nuevoPedido = await prisma.pedido.create({
         data: {
             descripcion, // Cambiado a 'descripcion'
@@ -23,6 +18,5 @@ export const obtenerPedidosPorUsuario = async (usuarioId) => {
     });
 };
 export const obtenerTodosLosPedidos = async () => {
-    console.log("-- Pasa por obtener todos los pedidos --- Pedido");
     return await prisma.pedido.findMany();
 };

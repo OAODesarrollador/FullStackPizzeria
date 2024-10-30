@@ -13,6 +13,12 @@ const prisma = new PrismaClient();
 app.use(cors());  // Permite comunicación entre backend y frontend
 app.use(express.json());  // Parseo de JSON en las peticiones
 
+// Middlewares
+app.use((req, res, next) => {
+  console.log(`Solicitud entrante: ${req.method} ${req.url}`);
+  next();
+});
+
 // Rutas
 app.use('/usuario', usuarioRoutes.default);
 app.use('/tarea', tareaRoutes.default);

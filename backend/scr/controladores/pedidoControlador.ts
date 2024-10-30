@@ -1,5 +1,5 @@
 import { Response, NextFunction } from 'express';
-import { crearTarea as crearPedidoModel, obtenerTareasPorRepartidor, obtenerTodasLasTareas, actualizarEstadoTarea } from '../Modelos/Tarea';
+import { crearPedido as crearPedidoModel, obtenerPedidosPorUsuario, obtenerTodosLosPedidos} from '../Modelos/Pedido';
 import { CustomRequest } from '../middlewares/authMiddlewares';
 
 export const obtenerPedidos = async (req: CustomRequest, res: Response, next: NextFunction) => {
@@ -8,9 +8,9 @@ export const obtenerPedidos = async (req: CustomRequest, res: Response, next: Ne
     let tareas;
 
     if (rol === 'REPARTIDOR') {
-      tareas = await obtenerTareasPorRepartidor(id);
+      tareas = await obtenerPedidosPorUsuario(id);
     } else if (rol === 'SUPERVISOR') {
-      tareas = await obtenerTodasLasTareas();
+      tareas = await obtenerTodosLosPedidos();
     } else {
       return res.status(403).json({ mensaje: 'No tienes permiso para ver estas tareas.' });
     }
@@ -23,8 +23,8 @@ export const obtenerPedidos = async (req: CustomRequest, res: Response, next: Ne
 
 export const crearPedido = async (req: CustomRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { descripcion, repartidorId } = req.body;
-    const nuevoPedido = await crearPedidoModel(descripcion, repartidorId);
+    const { descripcion, total, direccionEnvio, usuarioId } = req.body;
+    const nuevoPedido = await crearPedidoModel(descripcion, total, direccionEnvio, usuarioId);
     res.status(201).json(nuevoPedido);
   } catch (error) {
     next(error);
