@@ -26,7 +26,7 @@ const Checkout = () => {
       //});
 
       // Crear una nueva tarea en el backend
-      console.log("*-Pasa por crear tarea - del frontend-*");
+      console.log("*-Pasa por crear pedido - del frontend-*");
       await axios.post('http://localhost:3000/pedido/crearPedido', {
         descripcion: descripcion, // Cambiado a 'descripcion`Entregar pedido a ${direccionEnvio}`,
         total: state.carrito.reduce((total: number, producto: any) => total + producto.precio, 0),
@@ -39,7 +39,7 @@ const Checkout = () => {
       alert('¡Compra realizada con éxito!');
       navigate('/');
     } catch (error) {
-      console.error('Error al realizar el pedido:', error);
+      console.error('Error al realizar el pedido: mensaje del frontend', error);
       alert('Ocurrió un error al realizar el pedido. Inténtalo de nuevo más tarde.');
     }
   };

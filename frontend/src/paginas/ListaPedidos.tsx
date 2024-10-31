@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './ListaPedidos.css';  // Importa el CSS
 
 interface Pedido {
   id: number;
@@ -11,12 +12,24 @@ interface Pedido {
 
 const ListaPedidos: React.FC = () => {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
-  console.log('Pasa por pedidos - Frontend');
+  
   useEffect(() => {
     const fetchPedidos = async () => {
-      const response = await axios.get('http://localhost:3000/pedido/verPedidos');
-      console.log('Pasa por pedidos');
-      setPedidos(response.data);
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error('Token no encontrado.');
+          return;
+        }
+        const response = await axios.get('http://localhost:3000/pedido/verPedidos', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setPedidos(response.data);
+      } catch (error) {
+        console.error('Error al obtener pedidos:', error);
+      }
     };
 
     fetchPedidos();
@@ -24,14 +37,29 @@ const ListaPedidos: React.FC = () => {
 
   return (
     <div>
-      <h2>Lista de Pedidos</h2>
-      <ul>
-        {pedidos.map(pedido => (
-          <li key={pedido.id}>
-            {pedido.descripcion} - ${pedido.total} - {pedido.estado}
-          </li>
-        ))}
-      </ul>
+      <h2>Lista de Pedidos </h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Descripción</th>
+            <th>Total</th>
+            <th>Dirección de Envío</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pedidos.map(pedido => (
+            <tr key={pedido.id}>
+              <td>{pedido.id}</td>
+              <td>{pedido.descripcion}</td>
+              <td>${pedido.total}</td>
+              <td>{pedido.direccionEnvio}</td>
+              <td>{pedido.estado}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

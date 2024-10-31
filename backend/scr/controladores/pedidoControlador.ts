@@ -27,6 +27,7 @@ export const crearPedido = async (req: CustomRequest, res: Response, next: NextF
     const nuevoPedido = await crearPedidoModel(descripcion, total, direccionEnvio, usuarioId);
     res.status(201).json(nuevoPedido);
   } catch (error) {
+    
     next(error);
   }
 };
