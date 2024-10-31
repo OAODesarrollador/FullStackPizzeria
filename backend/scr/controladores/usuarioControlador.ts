@@ -54,3 +54,14 @@ export const loginUsuario = async (req: Request, res: Response, next: NextFuncti
     res.status(400).json({ error: 'Error en el login' });
   }
 };
+export const obtenerRepartidores = async (req: Request, res: Response) => {
+  try {
+    const repartidores = await prisma.usuario.findMany({
+      where: { rol: 'REPARTIDOR' },
+      select: { id: true, nombre: true },
+    });
+    res.json(repartidores);
+  } catch (error) {
+    res.status(400).json({ error: 'No se pudo obtener la lista de repartidores' });
+  }
+};

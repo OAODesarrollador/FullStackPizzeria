@@ -1,4 +1,6 @@
 import { crearPedido as crearPedidoModel, obtenerPedidosPorUsuario, obtenerTodosLosPedidos } from '../Modelos/Pedido.js';
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 export const obtenerPedidos = async (req, res, next) => {
     try {
         const { rol, id } = req.usuario;
@@ -23,6 +25,19 @@ export const crearPedido = async (req, res, next) => {
         const { descripcion, total, direccionEnvio, usuarioId } = req.body;
         const nuevoPedido = await crearPedidoModel(descripcion, total, direccionEnvio, usuarioId);
         res.status(201).json(nuevoPedido);
+    }
+    catch (error) {
+        next(error);
+    }
+};
+export const asignarRepartidor = async (req, res, next) => {
+    try {
+        const { idPedido, usuarioId } = req.body; // UsuarioId para el repartidor
+        const pedidoActualizado = await prisma.pedido.update({
+            where: { id: idPedido },
+            data: { usuarioId },
+        });
+        res.status(200).json(pedidoActualizado);
     }
     catch (error) {
         next(error);

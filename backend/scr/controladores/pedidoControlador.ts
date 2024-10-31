@@ -1,6 +1,9 @@
 import { Response, NextFunction } from 'express';
 import { crearPedido as crearPedidoModel, obtenerPedidosPorUsuario, obtenerTodosLosPedidos} from '../Modelos/Pedido';
 import { CustomRequest } from '../middlewares/authMiddlewares';
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+
 
 export const obtenerPedidos = async (req: CustomRequest, res: Response, next: NextFunction) => {
   try {
@@ -31,3 +34,20 @@ export const crearPedido = async (req: CustomRequest, res: Response, next: NextF
     next(error);
   }
 };
+
+
+export const asignarRepartidor = async (req: CustomRequest, res: Response, next: NextFunction) => {
+  try {
+    const { idPedido, usuarioId } = req.body; // UsuarioId para el repartidor
+    
+    const pedidoActualizado = await prisma.pedido.update({
+      where: { id: idPedido },
+      data: { usuarioId },
+    });
+
+    res.status(200).json(pedidoActualizado);
+  } catch (error) {
+    next(error);
+  }
+};
+
