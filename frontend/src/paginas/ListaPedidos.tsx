@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ListaPedidos.css';
+import { Button } from 'react-bootstrap';
 
 interface Pedido {
   id: number;
@@ -8,7 +9,7 @@ interface Pedido {
   total: number;
   direccionEnvio: string;
   estado: string;
-  usuarioId?: number; // El repartidor asignado
+  usuarioId?: number;
 }
 
 interface Repartidor {
@@ -50,6 +51,7 @@ const ListaPedidos: React.FC = () => {
 
     const fetchUsuario = async () => {
       const usuarioData = JSON.parse(localStorage.getItem('usuario')!);
+      console.log('Usuario:', usuarioData);
       setUsuario(usuarioData);
     };
 
@@ -76,13 +78,26 @@ const ListaPedidos: React.FC = () => {
     }
   };
 
+  const getEstadoColor = (estado: string) => {
+    switch (estado) {
+      case 'NUEVO':
+        return 'yellow';
+      case 'EN_PROCESO':
+        return '#f67d63';
+      case 'TERMINADO':
+        return '#90EE90';;
+      default:
+        return 'gray';
+    }
+  };
+
   return (
     <div>
       <h2>Lista de Pedidos - Usuario: {usuario?.nombre}</h2>
       <table>
         <thead>
           <tr>
-            <th>ID</th>
+            
             <th>Descripción</th>
             <th>Total</th>
             <th>Dirección de Envío</th>
@@ -93,11 +108,11 @@ const ListaPedidos: React.FC = () => {
         <tbody>
           {pedidos.map((pedido) => (
             <tr key={pedido.id}>
-              <td>{pedido.id}</td>
+              
               <td>{pedido.descripcion}</td>
               <td>${pedido.total}</td>
               <td>{pedido.direccionEnvio}</td>
-              <td>{pedido.estado}</td>
+              <td style={{ backgroundColor: getEstadoColor(pedido.estado), color: 'black' }}>{pedido.estado}</td>
               <td>
                 <select
                   value={pedido.usuarioId || ''}
@@ -115,6 +130,7 @@ const ListaPedidos: React.FC = () => {
           ))}
         </tbody>
       </table>
+      <Button variant="primary">Confirmar</Button>
     </div>
   );
 };

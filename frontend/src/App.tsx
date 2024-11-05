@@ -8,6 +8,7 @@ import Checkout from './paginas/Checkout';
 import ConfirmarPedido from './paginas/ConfirmarPedido'; // Importamos el componente ConfirmarPedido
 import Registro from './paginas/Registro';
 import ListaPedidos from './paginas/ListaPedidos'
+import PedidosAsignados from './paginas/PedidosAsignados';
 
 const App = () => {
   return (
@@ -19,7 +20,7 @@ const App = () => {
         <Route path="/tarea" element={<Tareas />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/confirmarpedido" element={<ConfirmarPedido />} /> {/* Nueva ruta para confirmar pedido */}
-        
+        <Route path='/PedidosRepartidor/:id' element={<PedidosAsignados/>} />
         <Route path='/ListaPedidos' element={<ListaPedidos />} />
       </Routes>
     </Router>

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 
-
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,17 +12,28 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post('http://localhost:3000/usuario/login', { email, password });
+
+      // Guarda el token y el usuario en localStorage
       localStorage.setItem('token', data.token);
-      navigate('/ListaPedidos');
+      localStorage.setItem('usuario', JSON.stringify(data.usuario));
+
+      // Redirige según el rol del usuario
+      if (data.usuario.rol === 'SUPERVISOR') {
+        navigate('/ListaPedidos');
+      } else if (data.usuario.rol === 'REPARTIDOR') {
+        navigate(`/PedidosRepartidor/${data.usuario.id}`);
+      } else {
+        alert('Rol de usuario desconocido.');
+      }
     } catch (error) {
       alert('Error en el login, revisa tus credenciales');
     }
   };
-  
-  // Registrar usuario
+
   const registrarUsuario = () => {
     navigate('/registro', { state: { email } });
   };
+
   return (
     <Container>
       <h2 className="text-center mt-5">Inicio de Sesión</h2>
@@ -51,15 +61,13 @@ const Login = () => {
         <Button variant="primary" type="submit" className="mt-4">
           Iniciar Sesión
         </Button>
-        
       </Form>
-      <Button variant="primary" type="submit" className="mt-4" onClick={registrarUsuario}>
-          Registrarse
+
+      <Button variant="secondary" className="mt-4" onClick={registrarUsuario}>
+        Registrarse
       </Button>
     </Container>
-    
   );
-  
 };
 
 export default Login;

@@ -1,4 +1,4 @@
-import { Response, NextFunction } from 'express';
+import { Response, Request, NextFunction } from 'express';
 import { crearPedido as crearPedidoModel, obtenerPedidosPorUsuario, obtenerTodosLosPedidos} from '../Modelos/Pedido';
 import { CustomRequest } from '../middlewares/authMiddlewares';
 import { PrismaClient } from '@prisma/client';
@@ -51,3 +51,30 @@ export const asignarRepartidor = async (req: CustomRequest, res: Response, next:
   }
 };
 
+export const obtenerPedidosAsignados = async (req: Request, res: Response, next: NextFunction) => {
+  const idRepartidor = parseInt(req.params.idRepartidor);
+  try {
+    const pedidos = await prisma.pedido.findMany({
+      where: { usuarioId: idRepartidor },
+    });
+    res.json(pedidos);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener los pedidos asignados' });
+  }
+}
+
+export const actualizarEstadoPedido = async (req: Request, res: Response) => {
+  const idPedido = parseInt(req.params.id);
+  const { estado } = req.body;
+
+  try {
+    const pedidoActualizado = await prisma.pedido.update({
+      where: { id: idPedido },
+      data: { estado },
+    });
+
+    res.json(pedidoActualizado);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al actualizar el pedido' });
+  }
+};

@@ -43,3 +43,29 @@ export const asignarRepartidor = async (req, res, next) => {
         next(error);
     }
 };
+export const obtenerPedidosAsignados = async (req, res, next) => {
+    const idRepartidor = parseInt(req.params.idRepartidor);
+    try {
+        const pedidos = await prisma.pedido.findMany({
+            where: { usuarioId: idRepartidor },
+        });
+        res.json(pedidos);
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Error al obtener los pedidos asignados' });
+    }
+};
+export const actualizarEstadoPedido = async (req, res) => {
+    const idPedido = parseInt(req.params.id);
+    const { estado } = req.body;
+    try {
+        const pedidoActualizado = await prisma.pedido.update({
+            where: { id: idPedido },
+            data: { estado },
+        });
+        res.json(pedidoActualizado);
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Error al actualizar el pedido' });
+    }
+};
