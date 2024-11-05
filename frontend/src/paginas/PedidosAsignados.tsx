@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import {  Button } from 'react-bootstrap';
 import axios from 'axios';
 import './ListaPedidos.css';
+import { useNavigate } from 'react-router-dom';
 
 interface Pedido {
   id: number;
@@ -19,6 +20,7 @@ interface Usuario {
 const PedidosAsignados: React.FC = () => {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [usuario, setUsuario] = useState<Usuario | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Obtenemos los datos del usuario almacenados en el localStorage
@@ -117,6 +119,9 @@ const PedidosAsignados: React.FC = () => {
         </tbody>
       </table>
       <Button variant="primary" onClick={confirmarCambios}>Confirmar</Button>
+      <Button variant="secondary" className="ml-2" onClick={() => navigate(-1)}>
+            Volver
+      </Button>
     </div>
   );
 };

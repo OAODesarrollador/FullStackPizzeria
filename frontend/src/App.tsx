@@ -9,9 +9,13 @@ import ConfirmarPedido from './paginas/ConfirmarPedido'; // Importamos el compon
 import Registro from './paginas/Registro';
 import ListaPedidos from './paginas/ListaPedidos'
 import PedidosAsignados from './paginas/PedidosAsignados';
+import ProductoDetalle from './paginas/ProductoDetalle';
+import { CarritoProvider } from './componentes/Carrito';
+
 
 const App = () => {
   return (
+    <CarritoProvider>
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -22,8 +26,10 @@ const App = () => {
         <Route path="/confirmarpedido" element={<ConfirmarPedido />} /> {/* Nueva ruta para confirmar pedido */}
         <Route path='/PedidosRepartidor/:id' element={<PedidosAsignados/>} />
         <Route path='/ListaPedidos' element={<ListaPedidos />} />
+        <Route path="/producto/:id" element={<ProductoDetalle />} />
       </Routes>
     </Router>
+    </CarritoProvider>
   );
 };
 

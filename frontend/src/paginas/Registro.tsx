@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Container, Form, Button} from 'react-bootstrap';
+import { FaUser, FaEnvelope, FaLock, FaUserTag } from 'react-icons/fa'; // Iconos de Font Awesome
 
 const Registro: React.FC = () => {
   const [nombre, setNombre] = useState('');
@@ -25,29 +27,71 @@ const Registro: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>Registro</h2>
-      <label>
-        Nombre:
-        <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} />
-      </label>
-      <label>
-        Email:
-        <input type="email" value={emailFromLogin} onChange={(e) => setEmailFromLogin(e.target.value)} />
-      </label>
-      <label>
-        Contraseña:
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </label>
-      <label>
-        Rol:
-        <select value={rol} onChange={(e) => setRol(e.target.value)}>
-          <option value="REPARTIDOR">Repartidor</option>
-          <option value="USUARIO">Usuario</option>
-        </select>
-      </label>
-      <button onClick={handleRegistro}>Registrarse</button>
-    </div>
+    <Container className="d-flex justify-content-center align-items-center min-vh-100">
+      <div className="w-100" style={{ maxWidth: '400px' }}>
+        <h2 className="text-center mb-4">Registro</h2>
+        <Form>
+          <Form.Group controlId="nombre">
+          <Form.Label><FaUser  /> Nombre Usuario</Form.Label>
+
+            <Form.Control 
+              type="text" 
+              placeholder="Ingresa tu nombre" 
+              value={nombre} 
+              onChange={(e) => setNombre(e.target.value)} 
+            />
+          </Form.Group>
+
+          <Form.Group controlId="email" className="mt-3">
+          <Form.Label><FaEnvelope  /> Email</Form.Label>
+
+            <Form.Control 
+              type="email" 
+              placeholder="Ingresa tu email" 
+              value={emailFromLogin} 
+              onChange={(e) => setEmailFromLogin(e.target.value)} 
+            />
+          </Form.Group>
+
+          <Form.Group controlId="password" className="mt-3">
+          <Form.Label><FaLock  /> Contraseña</Form.Label>
+
+            <Form.Control 
+              type="password" 
+              placeholder="Crea una contraseña" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+            />
+          </Form.Group>
+
+          <Form.Group controlId="rol" className="mt-3">
+            <Form.Label><FaUserTag  /> Rol</Form.Label>
+            <Form.Select 
+              value={rol} 
+              onChange={(e) => setRol(e.target.value)}
+            >
+              <option value="REPARTIDOR">Repartidor</option>
+              <option value="SUPERVISOR">Supervisor</option>
+            </Form.Select>
+          </Form.Group>
+
+          <Button 
+            variant="primary" 
+            className="w-100 mt-4" 
+            onClick={handleRegistro}
+          >
+            Registrarse
+          </Button>
+        </Form>
+        <Button 
+          variant="secondary" 
+          className="w-100 mt-2" 
+          onClick={() => navigate('/login')}
+        >
+          Volver al Login
+        </Button>
+      </div>
+    </Container>
   );
 };
 

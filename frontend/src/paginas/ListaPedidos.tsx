@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ListaPedidos.css';
 import { Button } from 'react-bootstrap';
+import {  useNavigate } from 'react-router-dom';
+
 
 interface Pedido {
   id: number;
@@ -18,6 +20,7 @@ interface Repartidor {
 }
 
 const ListaPedidos: React.FC = () => {
+  const navigate = useNavigate();
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [repartidores, setRepartidores] = useState<Repartidor[]>([]);
   const [usuario, setUsuario] = useState<{ nombre: string; id: number } | null>(null);
@@ -131,6 +134,9 @@ const ListaPedidos: React.FC = () => {
         </tbody>
       </table>
       <Button variant="primary">Confirmar</Button>
+      <Button variant="secondary" className="ml-2" onClick={() => navigate(-1)}>
+            Volver
+      </Button>
     </div>
   );
 };

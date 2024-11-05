@@ -1,13 +1,12 @@
-import { useState } from 'react';
-import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import React from 'react';
+import { Container, Row, Col, Button, Card, Badge } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-
+import { useCarrito } from '../componentes/Carrito';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { carrito, agregarAlCarrito } = useCarrito();
 
-  const [carrito, setCarrito] = useState<Array<{ id: number; nombre: string; precio: number }>>([]);
-  
   const productos = [
     { id: 1, nombre: 'Combo 1 - Pizza y Bebida', precio: 15 },
     { id: 2, nombre: 'Combo 2 - Pizza Familiar', precio: 18 },
@@ -16,21 +15,29 @@ const Home = () => {
     { id: 5, nombre: 'Combo 5 - Pizza Suprema', precio: 30 },
   ];
 
-  const agregarAlCarrito = (producto: { id: number; nombre: string; precio: number }) => {
-    setCarrito([...carrito, producto]);
-    console.log(carrito);
+  const verDetalles = (producto: { id: number; nombre: string; precio: number }) => {
+    navigate(`/producto/${producto.id}`, { state: { producto } });
   };
 
-  const finalizarCompra = () => {
-    navigate('./checkout', { state: { carrito } });
-    setCarrito([]);
+  const manejarFinalizarCompra = () => {
+    navigate('/checkout', { state: { carrito } });
   };
 
   return (
     <Container>
+      <div className="d-flex justify-content-end mt-3">
       <Button onClick={() => navigate('/login')}>Login</Button>
-     
-      <h1 className="text-center mt-5">Bienvenido a la Pizzería </h1>
+        <Button variant="link" onClick={() => navigate('/checkout', { state: { carrito } })} className="position-relative">
+          🛒 Carrito
+          {carrito.length > 0 && (
+            <Badge pill bg="danger" className="position-absolute top-0 start-100 translate-middle">
+              {carrito.length}
+            </Badge>
+          )}
+        </Button>
+      </div>
+
+      <h1 className="text-center mt-5">Bienvenido a la Pizzería</h1>
       <Row className="mt-4">
         {productos.map((producto) => (
           <Col key={producto.id} md={4}>
@@ -41,14 +48,20 @@ const Home = () => {
                 <Button variant="primary" onClick={() => agregarAlCarrito(producto)}>
                   Agregar al carrito
                 </Button>
+                <Button variant="link" onClick={() => verDetalles(producto)} className="ml-2">
+                  Ver Detalles
+                </Button>
               </Card.Body>
             </Card>
           </Col>
         ))}
       </Row>
-      <Button className="mt-4" variant="success" onClick={finalizarCompra} disabled={carrito.length === 0}>
-        Finalizar Compra
-      </Button>
+
+      <div className="text-center">
+        <Button className="mt-4" variant="success" onClick={manejarFinalizarCompra} disabled={carrito.length === 0}>
+          Finalizar Compra
+        </Button>
+      </div>
     </Container>
   );
 };
