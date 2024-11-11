@@ -3,6 +3,9 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Button, Card } from 'react-bootstrap';
 import { useCarrito } from '../componentes/Carrito';
+import { Barra } from '../componentes/BarraNav';
+import { Piepagina } from '../componentes/Piepagina';
+import './ProductoDetalle.css';
 
 const ProductoDetalle: React.FC = () => {
   const { state } = useLocation();
@@ -19,11 +22,12 @@ const ProductoDetalle: React.FC = () => {
   };
 
   return (
-    <Container>
+    <Container className="contenedor">
+        <Barra/>
         <Button variant="link" onClick={() => navigate('/checkout', { state: { carrito } })}>
             🛒 Ver Carrito ({carrito.length})
         </Button>
-      <Card className="mt-5">
+      <Card className=" mt-5">
         <Card.Body>
           <Card.Title>{producto.nombre}</Card.Title>
           <Card.Text>Precio: ${producto.precio}</Card.Text>
@@ -36,7 +40,9 @@ const ProductoDetalle: React.FC = () => {
           
         </Card.Body>
       </Card>
+      <Piepagina/>
     </Container>
+    
   );
 };
 

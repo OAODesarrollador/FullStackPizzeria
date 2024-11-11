@@ -1,0 +1,117 @@
+/* Home.css */
+.home {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+  }
+  
+  .video-fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    object-fit: cover;
+    z-index: -1; /* Detrás del contenido */
+  }
+  
+  .contenido {
+    position: relative;
+    z-index: 1;
+    color: white;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
+  h1 {
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-bottom: 2rem;
+  }
+  
+  .card {
+    background: rgba(0, 0, 0, 0.7); /* Fondo oscuro y semitransparente */
+    border: none;
+    color: white;
+  }
+  
+  .card-title {
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  }
+  
+  .card-text {
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  }
+  
+  .producto-imagen {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .btn-primary,
+  .btn-link {
+    color: #ffffff !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  .btn-primary {
+    background-color: #ff5733; /* Color naranja similar a la temática de una pizzería */
+    border: none;
+  }
+  
+  .btn-success {
+    background-color: #28a745;
+    border: none;
+  }
+  
+  .btn:disabled {
+    background-color: #888888;
+    border: none;
+  }
+  
+  .position-relative {
+    position: relative;
+  }
+  
+  .badge-pill {
+    padding: 5px 10px;
+    font-size: 0.9em;
+  }
+  .cajaCarrito{
+    position: fixed;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    opacity: 0.8;
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      margin-bottom: 1rem;
+    }
+  
+    h1 {
+      font-size: 1.8rem;
+    }
+  }
+  
+  .neon {
+    color: #f7f5f4; /* Mantener el color del texto en blanco */
+    margin-top: 30%;
+    font-size: 5rem;
+  
+    text-align: center;
+    text-shadow:
+      0 0 5px rgba(255, 165, 0, 1),   /* Naranja claro */
+      0 0 10px rgba(255, 165, 0, 1),
+      0 0 20px rgba(255, 165, 0, 1),
+      0 0 40px rgba(255, 69, 0, 1),    /* Naranja intenso */
+      0 0 80px rgba(255, 69, 0, 1),
+      0 0 90px rgba(255, 69, 0, 1),
+      0 0 100px rgba(255, 69, 0, 1),
+      0 0 140px rgba(255, 69, 0, 1),
+      0 0 180px rgba(255, 69, 0, 1);  
+  }

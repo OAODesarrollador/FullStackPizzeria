@@ -10,7 +10,9 @@ import Registro from './paginas/Registro';
 import ListaPedidos from './paginas/ListaPedidos'
 import PedidosAsignados from './paginas/PedidosAsignados';
 import ProductoDetalle from './paginas/ProductoDetalle';
+import Home2 from './paginas/Home2';
 import { CarritoProvider } from './componentes/Carrito';
+import { Barra } from './componentes/BarraNav';
 
 
 const App = () => {
@@ -27,6 +29,9 @@ const App = () => {
         <Route path='/PedidosRepartidor/:id' element={<PedidosAsignados/>} />
         <Route path='/ListaPedidos' element={<ListaPedidos />} />
         <Route path="/producto/:id" element={<ProductoDetalle />} />
+        <Route path='/Home2' element={<Home2 />} />
+        <Route path="/Barra" element={<Barra />} />
+        
       </Routes>
     </Router>
     </CarritoProvider>

@@ -1,0 +1,130 @@
+.home {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+  }
+  
+  .video-fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+  }
+  .cajaCarrito2 {
+    position: fixed;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    margin-left: 0%;
+  }
+  .contenido {
+    position: relative;
+    z-index: 1;
+    color: white;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
+  h1 {
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-bottom: 2rem;
+  }
+  
+  .carousel {
+    text-align: center;
+    max-width: 600px; /* Limita el ancho del carrusel */
+    margin: 0 auto;   /* Centra el carrusel */
+  }
+  
+  .card {
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: white;
+  }
+  
+  .card-title {
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  }
+  
+  .card-text {
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  }
+  
+  .producto-imagen {
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .btn-link {
+    color: #ffffff !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  .btn-primary {
+    background-color: #ff5733;
+    border: none;
+  }
+  
+  .btn-success {
+    background-color: #28a745;
+    border: none;
+  }
+  
+  .btn:disabled {
+    background-color: #888888;
+    border: none;
+  }
+  .btnlogin {
+    height: 40px;
+  }
+  
+  
+  .neon {
+    color: #f7f5f4;
+    margin-top: 30%;
+    font-size: 5rem;
+    text-align: center;
+    text-shadow:
+      0 0 5px rgba(255, 165, 0, 1),
+      0 0 10px rgba(255, 165, 0, 1),
+      0 0 20px rgba(255, 165, 0, 1),
+      0 0 40px rgba(255, 69, 0, 1),
+      0 0 80px rgba(255, 69, 0, 1),
+      0 0 90px rgba(255, 69, 0, 1),
+      0 0 100px rgba(255, 69, 0, 1),
+      0 0 140px rgba(255, 69, 0, 1),
+      0 0 180px rgba(255, 69, 0, 1);
+  }
+.nosotros {
+    color: #f7f5f4;
+    background-color: rgba(97, 41, 8, 0.8);
+    padding: 5%;
+    height: 100vh;    
+    text-align: center;
+    margin-bottom: 0%;
+  }
+
+  .logo2 {
+    width: 8%;
+    
+  }
+  .logo2:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+
+  .contacto {
+    height: 80vh;
+    color: #f7f5f4;    
+    background-color: rgba(46, 22, 8, 0.8);
+    padding: 5%;
+    text-align: left;
+    margin-bottom: 0%;
+  }
