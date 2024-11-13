@@ -3,6 +3,7 @@ import {  Button } from 'react-bootstrap';
 import axios from 'axios';
 //import './ListaPedidos.css';
 import { useNavigate } from 'react-router-dom';
+import '../paginas/Estilos/ListaPedidos.css';
 
 interface Pedido {
   id: number;

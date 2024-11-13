@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Home from './paginas/Home';
 import Login from './paginas/login';
 import Tareas from './paginas/tareas';
 import Checkout from './paginas/Checkout';

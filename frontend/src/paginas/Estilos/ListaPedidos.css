@@ -1,16 +1,44 @@
-/* ListaPedidos.css */
-table {
+
+  .tabla {
     width: 100%;
-    border-collapse: collapse;
+    
+   
   }
   
   th, td {
     padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
+    border: 1px solid #636262;
+    
   }
   
   th {
-    background-color: #f2f2f2;
-  }
+  
+  background-color: #1f1d1a;
+  color: #ffffff;
+  height: 40px;
+  border-radius: 10px;
+  
+}
  
+.tabla-container {
+    background-color: #501717;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+  }
+.fondo{
+    
+    color: #ffffff;
+   background-color: #da8739;
+}
+.nbreusuario {
+    color: #1b1a19;
+    background-color:#ffffff;
+    width: 50%;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 0%;
+    padding: auto;
+  }
+  

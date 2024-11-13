@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../paginas/Estilos/ListaPedidos.css';
-import { Button } from 'react-bootstrap';
+import { Button, Table, Col, Row, Container } from 'react-bootstrap';
 import {  useNavigate } from 'react-router-dom';
 
 interface Pedido {
@@ -109,12 +109,27 @@ const ListaPedidos: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Lista de Pedidos - Usuario: {usuario?.nombre}</h1>
-      <table>
-        <thead>
+    <div className='fondo '>
+      <Row > 
+        <h1 className="text-center mt-5 ">Lista de Pedidos</h1>
+      </Row>
+      <Container className="mt-1 tabla-container">
+      
+      <Row className='encabezado mb-3 mt-3'>
+        <Col>
+          <h2 className='d-flex'>Usuario:<p className='ms-4 nbreusuario'> {usuario?.nombre} </p> </h2>
+        </Col>
+        <Col className='text-end'>
+          <Button variant="primary" onClick={confirmarCambios} className='me-4'>Confirmar Asignación</Button>
+          <Button variant="secondary"  onClick={() => navigate(-1)}>
+            Volver
+          </Button>
+        </Col>
+      </Row>
+      <table className="tabla">
+        
+        <thead className="encabezadotabla">
           <tr>
-            
             <th>Descripción</th>
             <th>Total</th>
             <th>Dirección de Envío</th>
@@ -122,7 +137,8 @@ const ListaPedidos: React.FC = () => {
             <th>Repartidor</th>
           </tr>
         </thead>
-        <tbody>
+       
+        <tbody className="cuerpo">
           {pedidos.map((pedido) => (
             <tr key={pedido.id}>
               
@@ -146,12 +162,11 @@ const ListaPedidos: React.FC = () => {
             </tr>
           ))}
         </tbody>
+        
       </table>
-      <Button variant="primary" onClick={confirmarCambios}>Confirmar</Button>
-      <Button variant="secondary" className="ml-2" onClick={() => navigate(-1)}>
-            Volver
-      </Button>
-    </div>
+      
+      </Container>
+      </div>
   );
 };
 
