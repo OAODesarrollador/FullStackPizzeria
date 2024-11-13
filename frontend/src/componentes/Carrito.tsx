@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { Button, Container } from 'react-bootstrap';
 
 type Producto = { id: number; nombre: string; precio: number };
 type CarritoContextType = {
@@ -18,6 +19,7 @@ export const CarritoProvider: React.FC<CarritoProviderProps> = ({ children }) =>
 
   const agregarAlCarrito = (producto: Producto) => {
     setCarrito((prevCarrito) => [...prevCarrito, producto]);
+    
   };
 
   const vaciarCarrito = () => {
@@ -45,6 +47,7 @@ const Carrito: React.FC = () => {
 
   return (
     <div>
+      <Container>
       <h2>Carrito de Compras</h2>
       {carrito.length > 0 ? (
         <ul>
@@ -57,7 +60,11 @@ const Carrito: React.FC = () => {
       ) : (
         <p>El carrito está vacío</p>
       )}
-      <button onClick={vaciarCarrito}>Vaciar Carrito</button>
+      <Button variant="secondary" onClick={() => vaciarCarrito()}>
+        Vaciar Carrito
+      </Button>
+      
+      </Container>
     </div>
   );
 };

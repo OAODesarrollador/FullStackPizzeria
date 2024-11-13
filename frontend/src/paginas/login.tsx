@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import '../paginas/Estilos/login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-
+  
   const manejarLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -35,9 +36,9 @@ const Login = () => {
   };
 
   return (
-    <Container>
-      <h2 className="text-center mt-5">Inicio de Sesión</h2>
-      <Form onSubmit={manejarLogin} className="mt-4">
+    <Container className="containerLogin d-flex flex-column align-items-center justify-content-center">
+      <h1 className="text-center h2">Inicio de Sesión</h1>
+      <Form onSubmit={manejarLogin} className="formulario mt-4">
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -58,14 +59,19 @@ const Login = () => {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit" className="mt-4">
-          Iniciar Sesión
-        </Button>
+        <Row className="mt-4">
+          <Col className="text-center">
+            <Button variant="primary" type="submit">
+              Iniciar Sesión
+            </Button>
+          </Col>
+          <Col className="text-center">
+            <Button variant="secondary" onClick={registrarUsuario}>
+              Registrarse
+            </Button>
+          </Col>
+        </Row>
       </Form>
-
-      <Button variant="secondary" className="mt-4" onClick={registrarUsuario}>
-        Registrarse
-      </Button>
     </Container>
   );
 };

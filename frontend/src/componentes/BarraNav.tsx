@@ -1,13 +1,17 @@
-import { Col, Button, Badge, Navbar, Nav } from 'react-bootstrap';
+import { Col, Button, Badge, Navbar, Nav, Modal } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../imagenes/PizzaArgento.png';
 import { useCarrito } from '../componentes/Carrito';
-import './BarraNav.css';
-
+import '../componentes/Estilos/BarraNav.css';
+import { useState } from 'react';
+import Checkout from '../paginas/Checkout';
+import Login from '../paginas/login';
 export const Barra = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { carrito } = useCarrito();
+    const [modalCarrito, setmodalCarrito] = useState(false);
+    const [modalLogin, setmodalLogin] = useState(false);
 
     const handleNavigateNosotros = () => {
         if (location.pathname === '/Home2') {
@@ -43,6 +47,7 @@ export const Barra = () => {
     };
 
     return (
+        <>
         <Navbar expand="lg" className="cajaCarrito3 position-fixed  navbar-dark" >
             <Col className="d-flex align-items-center">
                 <Navbar.Brand onClick={() => navigate('/Home2')} className="d-flex align-items-center" style={{ cursor: 'pointer' }}>
@@ -60,8 +65,8 @@ export const Barra = () => {
                 </Navbar.Collapse>
             </Col>
             <Col className="d-flex justify-content-end align-items-center">
-                <Button onClick={() => navigate('/login')} className="me-2 btnlogin">Login</Button>
-                <Button variant="link" onClick={() => navigate('/checkout', { state: { carrito } })} className="position-relative">
+                <Button variant="primary" onClick={() => setmodalLogin(true)} className="me-2 btnlogin">Login</Button>
+                <Button variant="link" onClick={() => setmodalCarrito(true)} className="position-relative">
                     🛒 Carrito
                     {carrito.length > 0 && (
                         <Badge pill bg="danger" className="position-absolute top-0 start-100 translate-middle">
@@ -71,5 +76,14 @@ export const Barra = () => {
                 </Button>
             </Col>
         </Navbar>
+         <Modal show={modalCarrito} onHide={() => setmodalCarrito(false)} size="lg" centered> 
+           
+                
+            <Checkout onClose={() => setmodalCarrito(false)} />
+        </Modal>
+        <Modal show={modalLogin} onHide={() => setmodalLogin(false)} size="lg" centered className='modalLogin'> 
+            <Login  />
+        </Modal>
+        </>
     );
 };

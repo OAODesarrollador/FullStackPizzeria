@@ -1,0 +1,17 @@
+.Carrito {
+    color: #f7f5f4;
+    background-color: #da8739;
+    padding: 5%;
+    height: auto;
+    text-align: center;
+    margin-bottom: 0%;
+    border-radius: 10px;
+ }
+
+.modalCarrito {
+    border-radius: 10px;   
+    background-color: #501717;
+    padding: 5%;
+    height: auto;
+    margin-bottom: 0%; 
+}

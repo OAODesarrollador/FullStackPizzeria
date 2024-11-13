@@ -1,0 +1,32 @@
+.contenedorDetalle {
+    height: 100vh;
+    color: #f7f5f4;
+    
+   
+    
+}
+.card {
+    margin-left: 5%;
+    margin-right: 5%;
+   background-color: #292016 !important;
+}
+.cardDetalle {
+    height: 75vh;
+    padding: 5% 5% 5% 5%;
+    
+}
+.modalDetalle {
+    
+    color: #ffffff !important; 
+  }
+
+  .video-fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    
+  }

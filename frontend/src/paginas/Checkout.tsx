@@ -1,12 +1,16 @@
 import { Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useCarrito } from '../componentes/Carrito'; // Importamos el hook de carrito
+import { useNavigate } from 'react-router-dom';
+import { useCarrito } from '../componentes/Carrito';
+import '../paginas/Estilos/Checkout.css';
 
-const Checkout = () => {
-  const { state } = useLocation();
+interface CheckoutProps {
+  onClose?: () => void; // Propiedad opcional para cerrar el modal
+}
+const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
   const navigate = useNavigate();
-  const { carrito, vaciarCarrito } = useCarrito(); // Usamos vaciarCarrito del contexto
+  const { carrito, vaciarCarrito } = useCarrito();
+  const total = carrito.reduce((total, producto) => total + producto.precio, 0);
 
   const manejarEnvio = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,7 +20,7 @@ const Checkout = () => {
 
       await axios.post('http://localhost:3000/pedido/crearPedido', {
         descripcion,
-        total: carrito.reduce((total, producto) => total + producto.precio, 0),
+        total,
         repartidorId: 1,
         direccionEnvio,
         usuarioId: 1,
@@ -24,7 +28,7 @@ const Checkout = () => {
       });
 
       alert('¡Compra realizada con éxito!');
-      vaciarCarrito(); // Vacía el carrito después de confirmar el pedido
+      vaciarCarrito();
       navigate('/');
     } catch (error) {
       console.error('Error al realizar el pedido:', error);
@@ -33,35 +37,46 @@ const Checkout = () => {
   };
 
   return (
-    <Container>
-      <h2 className="text-center mt-5">Formulario de Envío</h2>
-      <Form onSubmit={manejarEnvio} className="mt-4">
+    <>
+    
+    <Container className="Carrito">
+      <h1>Carrito</h1>
+      <Form onSubmit={manejarEnvio} className="mt-4 modalCarrito">
         <h4>Detalles de la Compra:</h4>
         <ul>
           {carrito.map((producto, index) => (
-            <li key={index}>{producto.nombre} - ${producto.precio}</li>
+            <p key={index}>{producto.nombre} - ${producto.precio}</p>
           ))}
         </ul>
-
+        {total > 0 && <p>Total: ${total}</p>}
         <Form.Group controlId="direccionEnvio" className="mt-3">
           <Form.Label>Dirección de Envío</Form.Label>
           <Form.Control type="text" placeholder="Ingresa tu dirección" required />
         </Form.Group>
-
-        <Button variant="primary" type="submit" className="mt-4">
+        <Button variant="primary" type="submit" className="mt-4 btnConfirmar">
           Confirmar Pedido
         </Button>
         <Button variant="warning" className="mt-4 ml-2" onClick={vaciarCarrito}>
           Vaciar Carrito
         </Button>
+        <Button
+          variant="secondary"
+          className="mt-4 ml-2"
+          onClick={() => {
+            if (onClose) {
+              onClose(); // Cierra el modal si `onClose` está definido
+            } else {
+              navigate(-1); // Regresa a la página anterior si `onClose` no está definido
+            }
+          }}
+        >
+          Volver
+        </Button>
       </Form>
-      <Button variant="secondary" className="ml-2" onClick={() => navigate(-1)}>
-        Volver
-      </Button>
     </Container>
+    </>
   );
+  
 };
 
 export default Checkout;
-
-

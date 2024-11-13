@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './ListaPedidos.css';
+import '../paginas/Estilos/ListaPedidos.css';
 import { Button } from 'react-bootstrap';
 import {  useNavigate } from 'react-router-dom';
-
 
 interface Pedido {
   id: number;
@@ -11,7 +10,7 @@ interface Pedido {
   total: number;
   direccionEnvio: string;
   estado: string;
-  usuarioId?: number;
+  usuarioId?: number; // El repartidor asignado
 }
 
 interface Repartidor {
@@ -63,40 +62,55 @@ const ListaPedidos: React.FC = () => {
     fetchUsuario();
   }, []);
 
-  const asignarRepartidor = async (pedidoId: number, usuarioId: number) => {
+  const asignarRepartidor = (pedidoId: number, usuarioId: number) => {
+    setPedidos((prev) =>
+      prev.map((pedido) =>
+        pedido.id === pedidoId ? { ...pedido, usuarioId } : pedido
+      )
+    );
+  };
+
+  const confirmarCambios = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return;
+    }
+
     try {
-      const token = localStorage.getItem('token');
-      await axios.put(
-        'http://localhost:3000/pedido/asignarRepartidor',
-        { idPedido: pedidoId, usuarioId },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setPedidos((prev) =>
-        prev.map((pedido) =>
-          pedido.id === pedidoId ? { ...pedido, usuarioId } : pedido
-        )
-      );
+      for (const pedido of pedidos) {
+        // Solo actualizar pedidos que tengan un repartidor asignado
+        if (pedido.usuarioId) {
+          await axios.put(
+            `http://localhost:3000/pedido/asignarRepartidor`,
+            { idPedido: pedido.id, usuarioId: pedido.usuarioId },
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+        }
+      }
+      console.log('Todos los pedidos actualizados correctamente.');
     } catch (error) {
-      console.error('Error al asignar repartidor:', error);
+      console.error('Error al confirmar cambios en los pedidos:', error);
     }
   };
 
   const getEstadoColor = (estado: string) => {
     switch (estado) {
       case 'NUEVO':
-        return 'yellow';
+        return 'orange';
       case 'EN_PROCESO':
-        return '#f67d63';
+        return 'red';
       case 'TERMINADO':
-        return '#90EE90';;
+        return 'green';
       default:
         return 'gray';
     }
+    
   };
 
   return (
     <div>
-      <h2>Lista de Pedidos - Usuario: {usuario?.nombre}</h2>
+      <h1>Lista de Pedidos - Usuario: {usuario?.nombre}</h1>
       <table>
         <thead>
           <tr>
@@ -115,7 +129,7 @@ const ListaPedidos: React.FC = () => {
               <td>{pedido.descripcion}</td>
               <td>${pedido.total}</td>
               <td>{pedido.direccionEnvio}</td>
-              <td style={{ backgroundColor: getEstadoColor(pedido.estado), color: 'black' }}>{pedido.estado}</td>
+              <td style={{ color: 'white', backgroundColor: getEstadoColor(pedido.estado) }}>{pedido.estado}</td>
               <td>
                 <select
                   value={pedido.usuarioId || ''}
@@ -133,7 +147,7 @@ const ListaPedidos: React.FC = () => {
           ))}
         </tbody>
       </table>
-      <Button variant="primary">Confirmar</Button>
+      <Button variant="primary" onClick={confirmarCambios}>Confirmar</Button>
       <Button variant="secondary" className="ml-2" onClick={() => navigate(-1)}>
             Volver
       </Button>

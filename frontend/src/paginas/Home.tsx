@@ -7,7 +7,7 @@ import imagenCombo3 from '../imagenes/Pizza4.jpg';
 import imagenCombo4 from '../imagenes/pizza7.jpg';
 import imagenCombo5 from '../imagenes/pizza8.jpg';
 import videoFondo from '../imagenes/VideoPizzaDos.mp4'; // Importa el video
-import './Home.css';
+import '../paginas/Estilos/Home.css';
 
 const Home = () => {
   const navigate = useNavigate();

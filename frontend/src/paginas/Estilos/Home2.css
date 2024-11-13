@@ -128,3 +128,14 @@
     text-align: left;
     margin-bottom: 0%;
   }
+  .modalDetalle {
+    background-color: #f1880f !important; 
+    color: #ffffff !important; 
+  }
+
+/* Estilos/Home2.css */
+.titulo-script {
+  font-family: 'Dancing Script', cursive;
+  font-size: 6rem; /* Ajusta el tamaño como prefieras */
+  color: #ffffff; /* Puedes cambiar el color si es necesario */
+}
