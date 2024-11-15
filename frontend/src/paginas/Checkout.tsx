@@ -1,8 +1,10 @@
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useCarrito } from '../componentes/Carrito';
 import '../paginas/Estilos/Checkout.css';
+import { useState } from 'react';
+import { FaCheck, FaExclamationCircle } from 'react-icons/fa'
 
 interface CheckoutProps {
   onClose?: () => void; // Propiedad opcional para cerrar el modal
@@ -12,9 +14,19 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
   const { carrito, vaciarCarrito } = useCarrito();
   const total = carrito.reduce((total, producto) => total + producto.precio, 0);
 
+  const [avisoModal, setavisoModal] = useState(false);
+  const [vacioModal, setvacioModal] = useState(false);
+
   const manejarEnvio = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      if (carrito.length === 0) {
+        setvacioModal(true);
+        setTimeout(() => {
+          setvacioModal(false);
+        },2500)
+        return;
+      }
       const direccionEnvio = (document.getElementById('direccionEnvio') as HTMLInputElement).value;
       const descripcion = carrito.map((producto) => `${producto.nombre} - $${producto.precio}`).join(', ');
 
@@ -27,15 +39,24 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
         estado: 'NUEVO',
       });
 
-      alert('¡Compra realizada con éxito!');
+      setavisoModal(true);
       vaciarCarrito();
-      navigate('/');
+      setTimeout(() => {
+        setavisoModal(false);
+        if (onClose) {
+          onClose(); // Cierra el modal si `onClose` está definido
+        } else {
+          navigate(-1); // Regresa a la página anterior si `onClose` no está definido
+        }
+      }, 2500);
     } catch (error) {
       console.error('Error al realizar el pedido:', error);
       alert('Ocurrió un error al realizar el pedido. Inténtalo de nuevo más tarde.');
     }
   };
 
+  const handleClose = () => setavisoModal(false);
+  const handleClose2 = () => setvacioModal(false);
   return (
     <>
     
@@ -54,7 +75,7 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
           <Form.Control type="text" placeholder="Ingresa tu dirección" required />
         </Form.Group>
         <Button variant="primary" type="submit" className="mt-4 btnConfirmar">
-          Confirmar Pedido
+          Confirmar Pedido 
         </Button>
         <Button variant="warning" className="mt-4 ml-2" onClick={vaciarCarrito}>
           Vaciar Carrito
@@ -74,6 +95,28 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
         </Button>
       </Form>
     </Container>
+    <Modal show={avisoModal} onHide={handleClose } centered >
+        <Modal.Header closeButton style={{backgroundColor:"green"}} >
+          <Modal.Title >Pedido Realizado <FaCheck /></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>¡Tu pedido se ha realizado con éxito!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={vacioModal} onHide={handleClose2}  centered>
+      <Modal.Header style={{ backgroundColor: "Red", color: "white", display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Modal.Title><FaExclamationCircle /></Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{textAlign:"center"}}> El carrito esta vacio </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose2}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
   

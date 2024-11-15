@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Container, Form, Button} from 'react-bootstrap';
-import { FaUser, FaEnvelope, FaLock, FaUserTag } from 'react-icons/fa'; // Iconos de Font Awesome
+import { Container, Form, Button, Row, Col, Modal } from 'react-bootstrap';
+import { FaUser, FaEnvelope, FaLock, FaUserTag } from 'react-icons/fa'; 
+import '../paginas/Estilos/Registro.css';
 
-const Registro: React.FC = () => {
+interface RegistroProps {
+  onClose?: () => void; // Propiedad opcional para cerrar el modal
+}
+const Registro: React.FC<RegistroProps> = ({ onClose }) => {
   const [nombre, setNombre] = useState('');
   const [password, setPassword] = useState('');
   const [rol, setRol] = useState('REPARTIDOR');
-  const navigate = useNavigate();
   const location = useLocation();
 
   // Obtener el email desde la ubicación (state) del componente
@@ -19,20 +22,23 @@ const Registro: React.FC = () => {
     try {
       const response = await axios.post('http://localhost:3000/usuario/registro', { nombre, email: emailFromLogin, password, rol });
       alert(`Usuario registrado! ${response.data}`);
-      navigate('/login'); // Redirige al usuario a la página de login después del registro
+      if (onClose) {
+        onClose(); 
+      }
     } catch (error) {
       console.error('Error en el registro', error);
       alert('Error en el registro');
     }
   };
-
+  
   return (
-    <Container className="d-flex justify-content-center align-items-center min-vh-100">
-      <div className="w-100" style={{ maxWidth: '400px' }}>
-        <h2 className="text-center mb-4">Registro</h2>
-        <Form>
+    <div className='fondo'>
+    <Container className="d-flex justify-content-center align-items-center min-vh-100 containerLogin ">
+      <div className="w-100"  >
+        <h1 className="text-center">Registro</h1>
+        <Form className='formulario'>
           <Form.Group controlId="nombre">
-          <Form.Label><FaUser  /> Nombre Usuario</Form.Label>
+          <Form.Label><FaUser/> Nombre Usuario</Form.Label>
 
             <Form.Control 
               type="text" 
@@ -43,8 +49,7 @@ const Registro: React.FC = () => {
           </Form.Group>
 
           <Form.Group controlId="email" className="mt-3">
-          <Form.Label><FaEnvelope  /> Email</Form.Label>
-
+          <Form.Label><FaEnvelope/> Email</Form.Label>
             <Form.Control 
               type="email" 
               placeholder="Ingresa tu email" 
@@ -74,24 +79,33 @@ const Registro: React.FC = () => {
               <option value="SUPERVISOR">Supervisor</option>
             </Form.Select>
           </Form.Group>
-
+          <Row>
+          <Col className="d-flex justify-content-center ">
           <Button 
             variant="primary" 
-            className="w-100 mt-4" 
+            className="w-100 mt-4 me-4" 
             onClick={handleRegistro}
           >
             Registrarse
           </Button>
-        </Form>
-        <Button 
-          variant="secondary" 
-          className="w-100 mt-2" 
-          onClick={() => navigate('/login')}
-        >
-          Volver al Login
+          <Button
+            variant="secondary"
+            className="mt-4 ml-2 btnVolver"
+            onClick={() => {
+              if (onClose) {
+                onClose(); // Cierra el modal
+              }
+            }}
+          >
+            Volver
         </Button>
+          </Col>
+        </Row>
+        </Form>
+
       </div>
     </Container>
+    </div>
   );
 };
 

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import '../paginas/Estilos/login.css';
+import Registro from './Registro'; // Importa el componente Registro
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  
+  const [modalRegistro, setmodalRegistro] = useState(false);
+
   const manejarLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -31,11 +33,10 @@ const Login = () => {
     }
   };
 
-  const registrarUsuario = () => {
-    navigate('/registro', { state: { email } });
-  };
+  
 
   return (
+    <>
     <Container className="containerLogin d-flex flex-column align-items-center justify-content-center">
       <h1 className="text-center h2">Inicio de Sesión</h1>
       <Form onSubmit={manejarLogin} className="formulario mt-4">
@@ -59,20 +60,24 @@ const Login = () => {
           />
         </Form.Group>
 
-        <Row className="mt-4">
+        <Row className="mt-4 ">
           <Col className="text-center">
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" className='w-100'>
               Iniciar Sesión
             </Button>
           </Col>
-          <Col className="text-center">
-            <Button variant="secondary" onClick={registrarUsuario}>
-              Registrarse
-            </Button>
+          <Col className="text-center w-100">
+          <Button variant="secondary" onClick={() => setmodalRegistro(true)} className="w-100">Registrarse</Button> 
+            
+            
           </Col>
         </Row>
       </Form>
     </Container>
+    <Modal show={modalRegistro} onHide={() => setmodalRegistro(false)} size="lg" centered> 
+      <Registro onClose={() => setmodalRegistro(false)} /> {/* Pasa la función para cerrar el modal */}
+    </Modal>
+    </>
   );
 };
 

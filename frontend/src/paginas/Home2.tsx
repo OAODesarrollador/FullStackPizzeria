@@ -137,7 +137,7 @@ const Home2 = () => {
             <Piepagina />
 
             {/* Modal para mostrar la confirmación de agregar al carrito */}
-            <Modal  variant="success" show={showAlert} onHide={() => setShowAlert(false)}>
+            <Modal  variant="success" show={showAlert} onHide={() => setShowAlert(false)} centered>
                 <Modal.Header className="modalDetalle" closeButton>Producto agregado al carrito</Modal.Header>
                 <Modal.Body >{productoSeleccionado?.nombre}</Modal.Body>  
             </Modal>

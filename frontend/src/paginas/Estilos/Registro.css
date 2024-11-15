@@ -1,0 +1,24 @@
+.containerLogin {
+    width: 100%;
+    border-radius: 5px;
+    height: 60vh;
+    background-color: #da8739;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .formulario {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 20px;
+    color: aliceblue;
+    border-radius: 10px;
+    background-color: #501717;
+  }
+  .btnVolver {
+    
+   width: 100%;
+  }
+ 

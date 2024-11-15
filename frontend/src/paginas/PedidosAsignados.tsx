@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {  Button } from 'react-bootstrap';
+import {  Button, Row, Col, Container, Modal } from 'react-bootstrap';
 import axios from 'axios';
-//import './ListaPedidos.css';
+import { FaCheck, FaExclamationCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import '../paginas/Estilos/ListaPedidos.css';
 
@@ -16,12 +16,15 @@ interface Pedido {
 interface Usuario {
   id: number;
   nombre: string;
+  rol: string;
 }
 
 const PedidosAsignados: React.FC = () => {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [usuario, setUsuario] = useState<Usuario | null>(null);
   const navigate = useNavigate();
+  const [avisoModal, setavisoModal] = useState(false);
+  const [avisoError, setavisoError] = useState(false);
 
   useEffect(() => {
     // Obtenemos los datos del usuario almacenados en el localStorage
@@ -76,17 +79,54 @@ const PedidosAsignados: React.FC = () => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
       }
-      alert('Estados de pedidos actualizados exitosamente.');
+      setavisoModal(true);
+        setTimeout(() => {
+          setavisoModal(false);
+        },2500)
     } catch (error) {
+      setavisoError(true);
+        setTimeout(() => {
+          setavisoError(false);
+        },2500)
       console.error('Error al actualizar estados de pedidos:', error);
     }
   };
 
+  const getEstadoColor = (estado: string) => {
+    switch (estado) {
+      case 'NUEVO':
+        return 'orange';
+      case 'EN_PROCESO':
+        return 'red';
+      case 'TERMINADO':
+        return 'green';
+      default:
+        return 'gray';
+    }
+    
+  };
+  const handleClose = () => setavisoModal(false);
   return (
-    <div>
-      <h2>Pedidos Asignados - Repartidor: {usuario?.nombre}</h2>
-      <table>
-        <thead>
+    <div className="fondo">
+      <Row > 
+        <h1 className="text-center mt-5 ">Lista de Pedidos</h1>
+      </Row>
+      <Container className="mt-1 tabla-container">
+      
+      <Row className='encabezado mb-3 mt-3'>
+        <Col>
+          <h2 className='d-flex'>Usuario:<p className='ms-4 nbreusuario'> {usuario?.nombre}{' - '}{usuario?.rol} </p> </h2>
+        </Col>
+        <Col className='text-end'>
+          <Button variant="primary" onClick={confirmarCambios} className='me-4'>Confirmar Asignación</Button>
+          <Button variant="secondary"  onClick={() => navigate(-1)}>
+            Volver
+          </Button>
+        </Col>
+      </Row>
+      <div className='tabla-scroll'>
+      <table className="tabla">
+      <thead className="encabezadotabla">
           <tr>
             
             <th>Descripción</th>
@@ -96,14 +136,14 @@ const PedidosAsignados: React.FC = () => {
             <th>Acciones</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="cuerpo">
           {pedidos.map((pedido) => (
             <tr key={pedido.id}>
               
               <td>{pedido.descripcion}</td>
               <td>${pedido.total}</td>
               <td>{pedido.direccionEnvio}</td>
-              <td>{pedido.estado}</td>
+              <td style={{ color: 'white', backgroundColor: getEstadoColor(pedido.estado) }}>{pedido.estado}</td>
               <td>
                 <Button variant="danger" onClick={() => cambiarEstadoPedido(pedido.id, 'EN_PROCESO')}>
                   En Proceso
@@ -111,18 +151,36 @@ const PedidosAsignados: React.FC = () => {
                 <Button variant="success" onClick={() => cambiarEstadoPedido(pedido.id, 'TERMINADO')}>
                   Terminado
                 </Button>
-                <Button variant="warning" onClick={() => cambiarEstadoPedido(pedido.id, 'NUEVO')}>
-                  Nuevo
-                </Button>
+                
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <Button variant="primary" onClick={confirmarCambios}>Confirmar</Button>
-      <Button variant="secondary" className="ml-2" onClick={() => navigate(-1)}>
-            Volver
-      </Button>
+      </div>
+      </Container>
+      <Modal show={avisoModal} onHide={handleClose}  centered>
+        <Modal.Header style={{ backgroundColor: "green", color: "white", display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Modal.Title><FaCheck /></Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{textAlign:"center"}}> Todos los pedidos actualizados correctamente </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={avisoError} onHide={handleClose}  centered>
+        <Modal.Header style={{ backgroundColor: "Red", color: "white", display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Modal.Title><FaExclamationCircle /></Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{textAlign:"center"}}> Error al confirmar la asignación de los repartidores </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
