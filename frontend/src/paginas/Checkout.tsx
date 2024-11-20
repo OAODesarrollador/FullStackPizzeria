@@ -1,4 +1,4 @@
-import { Container, Form, Button, Modal } from 'react-bootstrap';
+import { Container, Form, Button, Modal, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useCarrito } from '../componentes/Carrito';
@@ -16,6 +16,8 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
 
   const [avisoModal, setavisoModal] = useState(false);
   const [vacioModal, setvacioModal] = useState(false);
+  const [mensajeModal, setMensajeModal] = useState('');
+  const [mensajeTitulo, setmensajeTitulo] = useState('');
 
   const manejarEnvio = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +40,8 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
         usuarioId: 1,
         estado: 'NUEVO',
       });
-
+      setMensajeModal('¡Tu pedido se ha realizado con éxito!');
+      setmensajeTitulo('Pedido realizado');
       setavisoModal(true);
       vaciarCarrito();
       setTimeout(() => {
@@ -55,6 +58,17 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
     }
   };
 
+  const handleVaciarCarrito = () => {
+    vaciarCarrito();
+    setMensajeModal('El carrito ha sido vaciado.'); // Mensaje al vaciar el carrito
+    setmensajeTitulo('Carrito vaciado');
+    setavisoModal(true);
+    setTimeout(() => {
+      setavisoModal(false);
+    }, 2500);
+  };
+
+  
   const handleClose = () => setavisoModal(false);
   const handleClose2 = () => setvacioModal(false);
   return (
@@ -74,32 +88,38 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
           <Form.Label>Dirección de Envío</Form.Label>
           <Form.Control type="text" placeholder="Ingresa tu dirección" required />
         </Form.Group>
-        <Button variant="primary" type="submit" className="mt-4 btnConfirmar">
-          Confirmar Pedido 
-        </Button>
-        <Button variant="warning" className="mt-4 ml-2" onClick={vaciarCarrito}>
-          Vaciar Carrito
-        </Button>
-        <Button
-          variant="secondary"
-          className="mt-4 ml-2"
-          onClick={() => {
-            if (onClose) {
-              onClose(); // Cierra el modal si `onClose` está definido
-            } else {
-              navigate(-1); // Regresa a la página anterior si `onClose` no está definido
-            }
-          }}
-        >
-          Volver
-        </Button>
+        <Row>
+          <Col className='d-flex'>
+          <Button  variant="primary" type="submit" className="mt-4 btnConfirmar w-100 me-2 ">
+            Confirmar Pedido 
+          </Button>
+          <Button variant="warning" className="mt-4 ml-2 w-100 me-2" onClick={handleVaciarCarrito}>
+                Vaciar Carrito
+          </Button>
+          <Button
+            variant="secondary"
+            className="mt-4 ml-2 w-100"
+            onClick={() => {
+              if (onClose) {
+                onClose(); // Cierra el modal si `onClose` está definido
+              } else {
+                navigate(-1); // Regresa a la página anterior si `onClose` no está definido
+              }
+            }}
+          >
+            Volver
+          </Button>
+          </Col>
+        </Row>
       </Form>
     </Container>
     <Modal show={avisoModal} onHide={handleClose } centered >
         <Modal.Header closeButton style={{backgroundColor:"green"}} >
-          <Modal.Title >Pedido Realizado <FaCheck /></Modal.Title>
+          <Modal.Title style={{color:"white"}}>{mensajeTitulo} {' '}<FaCheck /></Modal.Title>
         </Modal.Header>
-        <Modal.Body>¡Tu pedido se ha realizado con éxito!</Modal.Body>
+        <Modal.Body>
+          {mensajeModal}
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cerrar

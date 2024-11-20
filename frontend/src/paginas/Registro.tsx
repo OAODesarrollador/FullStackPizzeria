@@ -35,7 +35,7 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
     <div className='fondo'>
     <Container className="d-flex justify-content-center align-items-center min-vh-100 containerLogin ">
       <div className="w-100"  >
-        <h1 className="text-center">Registro</h1>
+        <h1 className="text-center">Registro Nuevo Usuario</h1>
         <Form className='formulario'>
           <Form.Group controlId="nombre">
           <Form.Label><FaUser/> Nombre Usuario</Form.Label>

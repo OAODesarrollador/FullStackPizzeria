@@ -36,7 +36,7 @@
   
   .carousel {
     text-align: center;
-    max-width: 600px; /* Limita el ancho del carrusel */
+    
     margin: 0 auto;   /* Centra el carrusel */
   }
   
@@ -44,6 +44,7 @@
     background: rgba(0, 0, 0, 0.7);
     border: none;
     color: white;
+    height: auto;
   }
   
   .card-title {
@@ -57,7 +58,7 @@
   }
   
   .producto-imagen {
-    height: 300px;
+    height: 30vh;
     object-fit: cover;
     border-radius: 5px;
   }
@@ -121,10 +122,11 @@
   }
 
   .contacto {
-    height: 80vh;
+    
+    height: 100vh;
     color: #f7f5f4;    
     background-color: rgba(46, 22, 8, 0.8);
-    padding: 5%;
+    padding: 5% 15% 0% 15%;
     text-align: left;
     margin-bottom: 0%;
   }
@@ -138,4 +140,16 @@
   font-family: 'Dancing Script', cursive;
   font-size: 6rem; /* Ajusta el tamaño como prefieras */
   color: #ffffff; /* Puedes cambiar el color si es necesario */
+}
+
+.titulo-script-contacto {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.5rem; /* Ajusta el tamaño como prefieras */
+  color: #ffffff; /* Puedes cambiar el color si es necesario */
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.mapa {
+  margin-top: 0;
+
 }

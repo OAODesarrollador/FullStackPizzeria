@@ -8,7 +8,7 @@ import videoFondo from '../imagenes/VideoPizzaDos.mp4';
 const ProductoDetalle: React.FC = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { agregarAlCarrito, carrito } = useCarrito();
+  const { agregarAlCarrito } = useCarrito();
   const [showAlert, setShowAlert] = useState(false);
   const producto = state?.producto;
 
@@ -29,15 +29,10 @@ const ProductoDetalle: React.FC = () => {
                 Tu navegador no soporta la reproducción de video.
     </video>
       <Barra />
-      
-      <Button variant="link" onClick={() => navigate('/checkout', { state: { carrito } })}>
-        🛒 Ver Carrito ({carrito.length})
-      </Button>
-      <Card className="mt-5 cardDetalle">
+      <div className="cardDetalle">
+      <Card className='mt-5' >
         <Card.Body>
-          
           <Row>
-          
             <Col md={6}>
               <Card.Img src={producto.imagen} />
             </Col>
@@ -47,11 +42,11 @@ const ProductoDetalle: React.FC = () => {
               <Card.Text>{producto.detalle}</Card.Text>
             </Col>
             <Row className="mt-5">
-                <Col>
-                  <Button variant="primary" onClick={handleAgregarAlCarrito}>
+                <Col className='d-flex'>
+                  <Button variant="primary" onClick={handleAgregarAlCarrito} className='w-100 me-5'>
                     Agregar al Carrito
                   </Button>
-                  <Button variant="secondary" className="ml-2" onClick={() => navigate(-1)}>
+                  <Button variant="secondary" className="ml-2 w-100" onClick={() => navigate(-1)}>
                     Volver
                   </Button>
                 </Col> 
@@ -64,7 +59,7 @@ const ProductoDetalle: React.FC = () => {
         </Card.Body>
         
       </Card>
-      
+      </div>
     </div>
   );
 };

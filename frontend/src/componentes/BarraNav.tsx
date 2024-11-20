@@ -50,7 +50,7 @@ export const Barra = () => {
         <>
         <Navbar expand="lg" className="cajaCarrito3 position-fixed  navbar-dark" >
             <Col className="d-flex align-items-center">
-                <Navbar.Brand onClick={() => navigate('/Home2')} className="d-flex align-items-center" style={{ cursor: 'pointer' }}>
+                <Navbar.Brand onClick={handleNavigateInicio} className="d-flex align-items-center" style={{ cursor: 'pointer' }}>
                     <img src={logo} alt="Logo de la pizzería" className="logo3" />
                 </Navbar.Brand>
             </Col>

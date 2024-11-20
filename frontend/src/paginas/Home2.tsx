@@ -10,8 +10,10 @@ import imagenCombo4 from '../imagenes/pizza7.jpg';
 import imagenCombo5 from '../imagenes/pizza8.jpg';
 import videoFondo from '../imagenes/VideoPizzaDos.mp4';
 import { Barra } from '../componentes/BarraNav';
-
+import { FaCheck, FaExclamationCircle } from 'react-icons/fa'
+import emailjs from 'emailjs-com';
 import '../paginas/Estilos/Home2.css';
+
 
 const Home2 = () => {
     const navigate = useNavigate();
@@ -21,6 +23,10 @@ const Home2 = () => {
     // Estado para el producto seleccionado y visibilidad del modal
     const [productoSeleccionado, setProductoSeleccionado] = useState<Producto | null>(null);
     const [showAlert, setShowAlert] = useState(false);
+    const [formData, setFormData] = useState({ nombre: '', email: '', mensaje: '' }); // Estado del formulario
+    const [loading, setLoading] = useState(false); // Para manejar el estado de envío
+    const [alertaCorreo, setAlertaCorreo] = useState(false);
+    const [errorCorreo, setErrorCorreo] = useState(false);
 
     // Producto interface para definir el tipo de producto
     interface Producto {
@@ -61,6 +67,41 @@ const Home2 = () => {
         setShowAlert(true); // Mostrar el modal
         setTimeout(() => setShowAlert(false), 2000); // Ocultar el modal después de 2 segundos
     };
+    const handleClose = () => setShowAlert(false);
+
+    // Enviar correo usando EmailJS
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { id, value } = e.target;
+        setFormData((prevState) => ({ ...prevState, [id]: value }));
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        console.log(formData);
+        emailjs
+            .send(
+                'service_o6gbsh6', // Reemplaza con tu Service ID
+                'template_7vchtk2', // Reemplaza con tu Template ID
+                {
+                    from_name: formData.nombre,
+                    to_email: formData.email,
+                    message: formData.mensaje,
+                }, // Datos del formulario
+                'JyRyZiB_qBCSyq7ob' // Reemplaza con tu Public Key
+               
+            )
+            .then(() => {
+                setAlertaCorreo(true); // Mostrar el modal
+                setTimeout(() => setAlertaCorreo(false), 2000);
+                setFormData({ nombre: '', email: '', mensaje: '' }); // Limpiar formulario
+            })
+            .catch(() => { 
+                setAlertaCorreo(true); // Mostrar el modal
+                setTimeout(() => setAlertaCorreo(false), 5000);})
+            .finally(() => setLoading(false));
+    };
 
     return (
         <div className="home">
@@ -69,27 +110,30 @@ const Home2 = () => {
                 Tu navegador no soporta la reproducción de video.
             </video>
             <Barra />
-            
             <Container className="contenido" id="inicio">
-                <h1 className="text-center mt-1 neon titulo-script">Pizzería Argento</h1>    
+                <h1 className="text-center mt-4 neon titulo-script">Pizzería Argento</h1>    
                 <Row className="justify-content-center mt-5">
-                    <Carousel className="carousel mx-auto" style={{ maxWidth: '600px' }}>
+                    <Carousel className="carousel" style={{ maxWidth: '600px' }}>
                         {productos.map((producto) => (
                             <Carousel.Item className="carousel-item" key={producto.id}>
                                 <Col xs={12} className="mb-4">
-                                    <Card className="h-100">
+                                    <Card >
                                         <Card.Body>
                                             <Card.Img className="producto-imagen" variant="top" src={producto.imagen} />
-                                            <Card.Title>{producto.nombre}</Card.Title>
+                                            <Card.Title className='mt-3'>{producto.nombre}</Card.Title>
                                             <Card.Text>Precio: ${producto.precio}</Card.Text>
-                                            <Button 
-                                                variant="primary" 
-                                                className="ml-2" 
-                                                onClick={() => handleAgregarAlCarrito(producto)}
-                                            >
-                                                Agregar al Carrito
-                                            </Button>
-                                            <Button variant='secondary' onClick={() => verDetalles(producto)}>Ver Detalles</Button>
+                                            <Row>
+                                                <Col className='d-flex mb-3 mt-2' >
+                                                    <Button 
+                                                        variant="primary" 
+                                                        className="w-100 me-4" 
+                                                        onClick={() => handleAgregarAlCarrito(producto)}
+                                                    >
+                                                        Agregar al Carrito
+                                                    </Button>
+                                                    <Button variant='secondary' onClick={() => verDetalles(producto)} className=' w-100'>Ver Detalles</Button>
+                                                </Col>
+                                            </Row>
                                         </Card.Body>
                                     </Card>
                                 </Col>
@@ -100,7 +144,7 @@ const Home2 = () => {
             </Container>
 
             <Row className="justify-content-center mt-5 nosotros" id="nosotros">
-                <Col className="d-flex  ">
+                <Col md={6} className="d-flex">
                     <h2 className="neon titulo-script">Nosotros</h2>
                 </Col>
                 <Col className="d-flex flex-column justify-content-center align-items-center texto-nosotros">
@@ -116,30 +160,83 @@ const Home2 = () => {
                 </Col>
             </Row>
 
-            <Row id='contacto'>
-              <Col className="d-flex justify-content-start contacto">
-                  <Form>
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label>Correo Electrónico</Form.Label>
-                          <Form.Control type="email" placeholder="Ingrese su correo electrónico" />
-                      </Form.Group>
-                      <Form.Group className="mb-3" controlId="formBasicPassword">
-                          <Form.Label>Mensaje</Form.Label>
-                          <Form.Control as="textarea" placeholder="Ingrese su mensaje" rows={6} cols={50}/>
-                      </Form.Group>
-                      <Button variant="primary" type="submit">
-                          Enviar
-                      </Button>
-                  </Form>      
-              </Col>
+            <Row id="contacto" className="justify-content-center contacto">
+                <Col className="justify-content-start correo">
+                    <h2 className="neon titulo-script-contacto">Contáctanos</h2>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3" controlId="nombre">
+                            <Form.Label>Nombre</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Cómo te llamás"
+                                value={formData.nombre}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="email">
+                            <Form.Label>Correo Electrónico</Form.Label>
+                            <Form.Control
+                                type="email"
+                                placeholder="Tu correo electrónico"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="mensaje">
+                            <Form.Label>Mensaje</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                placeholder="En qué te podemos ayudar"
+                                rows={6}
+                                value={formData.mensaje}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Button variant="primary" type="submit" className="w-100" disabled={loading}>
+                            {loading ? 'Enviando...' : 'Enviar'}
+                        </Button>
+                    </Form>
+                </Col>
             </Row>
 
             <Piepagina />
 
             {/* Modal para mostrar la confirmación de agregar al carrito */}
             <Modal  variant="success" show={showAlert} onHide={() => setShowAlert(false)} centered>
-                <Modal.Header className="modalDetalle" closeButton>Producto agregado al carrito</Modal.Header>
-                <Modal.Body >{productoSeleccionado?.nombre}</Modal.Body>  
+                <Modal.Header closeButton style={{backgroundColor:"green"}} >
+                    <Modal.Title style={{color:"white"}}>Producto agregado al carrito {'  '}<FaCheck /></Modal.Title>
+                </Modal.Header>
+                <Modal.Body >{productoSeleccionado?.nombre}</Modal.Body> 
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                    Cerrar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <Modal  variant="success" show={alertaCorreo} onHide={() => setAlertaCorreo(false)} centered>
+                <Modal.Header closeButton style={{backgroundColor:"green"}} >
+                    <Modal.Title style={{color:"white"}}>Correo enviado correctamente {'  '}<FaCheck /></Modal.Title>
+                </Modal.Header>
+                <Modal.Body >Gracias por contactarnos</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                    Cerrar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <Modal  variant="danger" show={errorCorreo} onHide={() => setErrorCorreo(false)} centered>
+                <Modal.Header closeButton style={{backgroundColor:"red"}} >
+                    <Modal.Title style={{color:"white"}}>Error al enviar el correo {'  '}<FaExclamationCircle /></Modal.Title>
+                </Modal.Header>
+                <Modal.Body >Hemos tenido un error al tratar de enviar el correo</Modal.Body> 
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                    Cerrar
+                    </Button>
+                </Modal.Footer>
             </Modal>
         </div>
     );
