@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Container, Form, Button, Row, Col, Modal } from 'react-bootstrap';
+import {  useLocation } from 'react-router-dom';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { FaUser, FaEnvelope, FaLock, FaUserTag } from 'react-icons/fa'; 
 import '../paginas/Estilos/Registro.css';
 
@@ -17,8 +17,13 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
   // Obtener el email desde la ubicación (state) del componente
   const initialEmail = location.state?.email || '';
   const [emailFromLogin, setEmailFromLogin] = useState(initialEmail);
+  const [formErrors, setFormErrors] = useState({ nombre: '', email: '', password: '', rol: '' });
 
   const handleRegistro = async () => {
+    validateForm();
+        if (!validateForm()) {
+            return; // Si la validación falla, no continuar
+        }
     try {
       const response = await axios.post('http://localhost:3000/usuario/registro', { nombre, email: emailFromLogin, password, rol });
       alert(`Usuario registrado! ${response.data}`);
@@ -30,7 +35,28 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
       alert('Error en el registro');
     }
   };
-  
+  const validateForm = () => {
+    const passwordValido = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+    let errors = { nombre: '', email: '', password: '', rol: '' };
+    let isValid = true;
+   
+    if (!nombre || nombre.length < 2 || nombre.length > 40 || !/^[a-zA-Z\s]+$/.test(nombre)) {
+        errors.nombre = 'El nombre debe tener solo entre 2 y 40 Letras con espacios.';
+        console.log('nombre vacio',errors);
+        isValid = false;
+    }
+    if (!(/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+/.test(emailFromLogin))) {
+        errors.email = 'El correo no es valido.';
+        isValid = false;
+    }
+    if (!passwordValido.test(password)) {
+        errors.password = 'La contraseña debe tener al menos 8 caracteres y menor a 20, una mayúscula, una minúscula, un número y un carácter especial. ';
+        isValid = false;
+    }
+
+    setFormErrors(errors); // Actualizar los errores en el estado
+    return isValid;
+};
   return (
     <div className='fondo'>
     <Container className="d-flex justify-content-center align-items-center min-vh-100 containerLogin ">
@@ -46,6 +72,7 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
               value={nombre} 
               onChange={(e) => setNombre(e.target.value)} 
             />
+             {formErrors.nombre?.trim() && <p className="msjError">{formErrors.nombre}</p>} {/* Mensaje de error */}
           </Form.Group>
 
           <Form.Group controlId="email" className="mt-3">
@@ -56,6 +83,7 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
               value={emailFromLogin} 
               onChange={(e) => setEmailFromLogin(e.target.value)} 
             />
+             {formErrors.email?.trim() && <p className="msjError">{formErrors.email}</p>} {/* Mensaje de error */}
           </Form.Group>
 
           <Form.Group controlId="password" className="mt-3">
@@ -67,6 +95,7 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
               value={password} 
               onChange={(e) => setPassword(e.target.value)} 
             />
+             {formErrors.password?.trim() && <p className="msjError">{formErrors.password}</p>} {/* Mensaje de error */}
           </Form.Group>
 
           <Form.Group controlId="rol" className="mt-3">

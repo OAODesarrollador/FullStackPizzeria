@@ -10,9 +10,13 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const [modalRegistro, setmodalRegistro] = useState(false);
-
+  const [formErrors, setFormErrors] = useState({ email: '', password: '' });
   const manejarLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validarDatos()) {
+      
+      return; // Si la validación falla, no continuar
+  }
     try {
       const { data } = await axios.post('http://localhost:3000/usuario/login', { email, password });
 
@@ -33,7 +37,23 @@ const Login = () => {
     }
   };
 
-  
+  const validarDatos = () => {
+    let errors = { email: '', password: '' };
+    let isValid = true;
+    
+    if (!(/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+/.test(email))) {
+        errors.email = 'Correo no válido o vacio';
+        isValid = false;
+    }
+    if (!password|| password.length < 3 || password.length > 20 || /^\s+$/.test(password)) {
+        errors.password = 'Password no válido o vacio';
+        isValid = false;
+
+    }
+
+    setFormErrors(errors); // Actualizar los errores en el estado
+    return isValid;
+};
 
   return (
     <>
@@ -47,7 +67,9 @@ const Login = () => {
             placeholder="Ingresa tu email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            
           />
+          {formErrors.email?.trim() && <p className="msjError">{formErrors.email}</p>} {/* Mensaje de error */}
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword" className="mt-3">
@@ -57,12 +79,15 @@ const Login = () => {
             placeholder="Ingresa tu contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="off"
+            
           />
+          {formErrors.password?.trim() && <p className="msjError">{formErrors.password}</p>} {/* Mensaje de error */}
         </Form.Group>
 
         <Row className="mt-4 ">
           <Col className="text-center">
-            <Button variant="primary" type="submit" className='w-100'>
+            <Button variant="primary" type="submit" className='w-100' onClick={validarDatos}>
               Iniciar Sesión
             </Button>
           </Col>

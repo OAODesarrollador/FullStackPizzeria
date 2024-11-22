@@ -21,4 +21,7 @@
   .h2 {
     color: aliceblue;
   }
-  
+  .msjError {
+    color: rgb(233, 178, 178);
+    
+  }

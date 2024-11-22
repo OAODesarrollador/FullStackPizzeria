@@ -5,12 +5,14 @@ import { useCarrito } from '../componentes/Carrito';
 import { Barra } from '../componentes/BarraNav';
 import '../paginas/Estilos/ProductoDetalle.css';
 import videoFondo from '../imagenes/VideoPizzaDos.mp4';
+import { FaCheck, FaExclamationCircle } from 'react-icons/fa';
 const ProductoDetalle: React.FC = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { agregarAlCarrito } = useCarrito();
   const [showAlert, setShowAlert] = useState(false);
   const producto = state?.producto;
+  const handleClose = () => setShowAlert(false);
 
   if (!producto) return <p>Producto no encontrado</p>;
 
@@ -51,10 +53,17 @@ const ProductoDetalle: React.FC = () => {
                   </Button>
                 </Col> 
               </Row>
-              <Modal  variant="success" show={showAlert} onHide={() => setShowAlert(false)}>
-                <Modal.Header className="modalDetalle" closeButton>Producto agregado al carrito</Modal.Header>
-                <Modal.Body>{producto.nombre}</Modal.Body>  
-              </Modal>
+              <Modal variant="success" show={showAlert} onHide={() => setShowAlert(false)} centered>
+                <Modal.Header closeButton style={{ backgroundColor: "green" }} >
+                    <Modal.Title style={{ color: "white" }}>Producto agregado al carrito {'   '}<FaCheck /></Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{producto.nombre}</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cerrar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
           </Row>
         </Card.Body>
         
