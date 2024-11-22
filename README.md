@@ -1,46 +1,21 @@
-# Getting Started with Create React App
+# Proyecto FullStack 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+EL proyecto consiste en un E-Commerce de comida, con la posibilidad de agregar a tu carrito, y ver los pedidos realizados por los clientes y hacer un seguimiento de los pedidos. 
+En la página principal veras un carrusel de promociones, informacion sobre nosotros y un formulario de contacto con la posibilidad de envio el envio de un correo a la empresa.
+Por parte de los clientes podran ver los productos, también el detalle de los mismos y agregarlos a su carrito.
+Los usuarios (personal de la empresa) podran ver los pedidos realizados y cambiar el estado de los mismos.
+Si es un SUPERVISOR podra ver todos los pedidos, y asignar a un repartidor según una lista.
+Si es un REPARTIDOR, podra ver los pedidos asignados por un SUPERVISOR, y cambiar el estado de la entrega.
+El proyecto fue desarrollado con TypeScript, React, Node.js, Express, PostgreSQL y Prisma.
 
-In the project directory, you can run:
+### Backend
 
-### `npm start`
+Para ejecutar el servidor en modo desarrollo, utiliza el comando `npm run dev`. 
+Debe realizarce dentro de la capeta backend.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Frontend
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Para ejecutar el servidor en modo desarrollo, utiliza el comando `npm start`.
+Debe realizarce dentro de la capeta frontend.
