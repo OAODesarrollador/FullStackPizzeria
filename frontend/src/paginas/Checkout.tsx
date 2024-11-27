@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Container, Form, Button, Modal, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -15,17 +16,23 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
   const total = carrito.reduce((total, producto) => total + producto.precio, 0);
 
   const [avisoModal, setavisoModal] = useState(false);
-  const [vacioModal, setvacioModal] = useState(false);
   const [mensajeModal, setMensajeModal] = useState('');
   const [mensajeTitulo, setmensajeTitulo] = useState('');
+  const [colorFondo, setColorFondo] = useState('');
+  const [iconoModal, setIconoModal] = useState<React.ReactNode | null>(null);
 
+  
   const manejarEnvio = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       if (carrito.length === 0) {
-        setvacioModal(true);
+        setmensajeTitulo('');
+        setMensajeModal('El carrito esta vacio');
+        setColorFondo('red');
+        setIconoModal(<FaExclamationCircle />);
+        setavisoModal(true);
         setTimeout(() => {
-          setvacioModal(false);
+          setavisoModal(false);
         },2500)
         return;
       }
@@ -42,6 +49,8 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
       });
       setMensajeModal('¡Tu pedido se ha realizado con éxito!');
       setmensajeTitulo('Pedido realizado');
+      setColorFondo('green');
+      setIconoModal(<FaCheck />);
       setavisoModal(true);
       vaciarCarrito();
       setTimeout(() => {
@@ -62,6 +71,8 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
     vaciarCarrito();
     setMensajeModal('El carrito ha sido vaciado.'); // Mensaje al vaciar el carrito
     setmensajeTitulo('Carrito vaciado');
+    setColorFondo('#FFCC00');
+    setIconoModal(<FaCheck />);
     setavisoModal(true);
     setTimeout(() => {
       setavisoModal(false);
@@ -70,7 +81,7 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
 
   
   const handleClose = () => setavisoModal(false);
-  const handleClose2 = () => setvacioModal(false);
+  //const handleClose2 = () => setvacioModal(false);
   return (
     <>
     
@@ -114,8 +125,8 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
       </Form>
     </Container>
     <Modal show={avisoModal} onHide={handleClose } centered >
-        <Modal.Header closeButton style={{backgroundColor:"green"}} >
-          <Modal.Title style={{color:"white"}}>{mensajeTitulo} {' '}<FaCheck /></Modal.Title>
+        <Modal.Header style={{ backgroundColor: colorFondo, color: "white", display: "flex", justifyContent: "center", alignItems: "center" }} >
+          <Modal.Title style={{color:"white"}}>{mensajeTitulo} {' '} {iconoModal}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {mensajeModal}
@@ -126,17 +137,7 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal show={vacioModal} onHide={handleClose2}  centered>
-      <Modal.Header style={{ backgroundColor: "Red", color: "white", display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <Modal.Title><FaExclamationCircle /></Modal.Title>
-        </Modal.Header>
-        <Modal.Body style={{textAlign:"center"}}> El carrito esta vacio </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose2}>
-            Cerrar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      
     </>
   );
   

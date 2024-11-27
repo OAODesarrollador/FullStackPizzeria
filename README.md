@@ -20,3 +20,5 @@ Debe realizarce dentro de la capeta backend.
 
 Para ejecutar el servidor en modo desarrollo, utiliza el comando `npm start`.
 Debe realizarce dentro de la capeta frontend.
+
+## Este proyecto se encuentra en desarrollo

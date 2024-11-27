@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './paginas/login';
 import Tareas from './paginas/tareas';
 import Checkout from './paginas/Checkout';
-import ConfirmarPedido from './paginas/ConfirmarPedido'; // Importamos el componente ConfirmarPedido
+//mport ConfirmarPedido from './paginas/ConfirmarPedido'; // Importamos el componente ConfirmarPedido
 import Registro from './paginas/Registro';
 import ListaPedidos from './paginas/ListaPedidos'
 import PedidosAsignados from './paginas/PedidosAsignados';
@@ -24,7 +24,7 @@ const App = () => {
         <Route path="/registro" element={<Registro />} />
         <Route path="/tarea" element={<Tareas />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/confirmarpedido" element={<ConfirmarPedido />} /> {/* Nueva ruta para confirmar pedido */}
+         {/* <Route path="/confirmarpedido" element={<ConfirmarPedido />}Nueva ruta para confirmar pedido */}
         <Route path='/PedidosRepartidor/:id' element={<PedidosAsignados/>} />
         <Route path='/ListaPedidos' element={<ListaPedidos />} />
         <Route path="/producto/:id" element={<ProductoDetalle />} />
