@@ -1,8 +1,9 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { obtenerTareas, crearTarea, actualizarTarea } from '../controladores/tareaControlador';
-import { autenticarUsuario, CustomRequest } from '../middlewares/authMiddlewares';
+import { obtenerTareas, crearTarea, actualizarTarea } from '../controladores/tareaControlador.js';
+import { autenticarUsuario, CustomRequest } from '../middlewares/authMiddlewares.js';
 
 const router = Router();
+
 
 const wrapAsync = (fn: (req: CustomRequest, res: Response, next: NextFunction) => Promise<void>) => {
   return (req: Request, res: Response, next: NextFunction) => {

@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
-import { crearTarea as crearTareaModel, obtenerTareasPorRepartidor, obtenerTodasLasTareas, actualizarEstadoTarea } from '../Modelos/Tarea';
-import { CustomRequest } from '../middlewares/authMiddlewares';
+import { crearTarea as crearTareaModel, obtenerTareasPorRepartidor, obtenerTodasLasTareas, actualizarEstadoTarea } from '../Modelos/Tarea.js';
+import { CustomRequest } from '../middlewares/authMiddlewares.js';
 
 export const obtenerTareas = async (req: CustomRequest, res: Response, next: NextFunction): Promise<void> => {
   try {

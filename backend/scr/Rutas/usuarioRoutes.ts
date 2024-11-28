@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { registrarUsuario, loginUsuario, obtenerRepartidores } from '../controladores/usuarioControlador';
+import { registrarUsuario, loginUsuario, obtenerRepartidores } from '../controladores/usuarioControlador.js';
 
 
 const router = Router();

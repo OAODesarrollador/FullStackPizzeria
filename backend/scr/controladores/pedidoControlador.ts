@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
-import { crearPedido as crearPedidoModel, obtenerPedidosPorUsuario, obtenerTodosLosPedidos} from '../Modelos/Pedido';
-import { CustomRequest } from '../middlewares/authMiddlewares';
+import { crearPedido as crearPedidoModel, obtenerPedidosPorUsuario, obtenerTodosLosPedidos} from '../Modelos/Pedido.js';
+import { CustomRequest } from '../middlewares/authMiddlewares.js';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 

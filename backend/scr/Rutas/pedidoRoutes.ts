@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { obtenerPedidos, crearPedido, asignarRepartidor, obtenerPedidosAsignados, actualizarEstadoPedido } from '../controladores/pedidoControlador';
-import { autenticarUsuario } from '../middlewares/authMiddlewares';
+import { obtenerPedidos, crearPedido, asignarRepartidor, obtenerPedidosAsignados, actualizarEstadoPedido } from '../controladores/pedidoControlador.js';
+import { autenticarUsuario } from '../middlewares/authMiddlewares.js';
 
 const router = Router();
 
