@@ -5,7 +5,7 @@ import { useCarrito } from '../componentes/Carrito';
 import { Barra } from '../componentes/BarraNav';
 import '../paginas/Estilos/ProductoDetalle.css';
 import videoFondo from '../imagenes/VideoPizzaDos.mp4';
-import { FaCheck, FaExclamationCircle } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 const ProductoDetalle: React.FC = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
