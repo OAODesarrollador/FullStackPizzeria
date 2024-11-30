@@ -34,6 +34,7 @@ const Login = () => {
         alert('Rol de usuario desconocido.');
       }
     } catch (error) {
+      console.error('Error en el login', error);
       alert('Error en el login, revisa tus credenciales');
     }
   };
