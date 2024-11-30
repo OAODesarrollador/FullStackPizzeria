@@ -25,7 +25,7 @@ const Login = () => {
       // Guarda el token y el usuario en localStorage
       localStorage.setItem('token', data.token);
       localStorage.setItem('usuario', JSON.stringify(data.usuario));
-
+      console.log(data);
       // Redirige según el rol del usuario
       if (data.usuario.rol === 'SUPERVISOR') {
         navigate('/ListaPedidos');
@@ -43,7 +43,7 @@ const Login = () => {
   const validarDatos = () => {
     let errors = { email: '', password: '' };
     let isValid = true;
-    const passwordValido = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&]{8,20}$/;
+    const passwordValido = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{8,20}$/;
     
     if (!(/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+/.test(email))) {
         errors.email = 'Correo no válido o vacio';

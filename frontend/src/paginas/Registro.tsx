@@ -38,7 +38,7 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
     }
   };
   const validateForm = () => {
-    const passwordValido = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&]{8,20}$/;
+    const passwordValido = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{8,20}$/;
     let errors = { nombre: '', email: '', password: '', rol: '' };
     let isValid = true;
    
