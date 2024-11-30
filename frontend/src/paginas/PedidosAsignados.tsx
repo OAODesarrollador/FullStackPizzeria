@@ -41,7 +41,8 @@ const PedidosAsignados: React.FC = () => {
       }
 
       try {
-        const response = await axios.get(`http://localhost:3000/pedido/asignados/${usuarioData.id}`, {
+        //const response = await axios.get(`http://localhost:3000/pedido/asignados/${usuarioData.id}`, {
+        const response = await axios.get(`/pedido/asignados/${usuarioData.id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setPedidos(response.data);
@@ -75,7 +76,8 @@ const PedidosAsignados: React.FC = () => {
       const pedidosCambiados = pedidos.filter((pedido) => pedido.estado !== 'Pendiente');
       for (const pedido of pedidosCambiados) {
         await axios.put(
-          `http://localhost:3000/pedido/${pedido.id}`,
+          //`http://localhost:3000/pedido/${pedido.id}`,
+          `/pedido/${pedido.id}`,
           { estado: pedido.estado },
           { headers: { Authorization: `Bearer ${token}` } }
         );

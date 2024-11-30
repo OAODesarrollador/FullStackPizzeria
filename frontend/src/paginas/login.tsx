@@ -19,8 +19,8 @@ const Login = () => {
       return; // Si la validación falla, no continuar
   }
     try {
-      const { data } = await axios.post('http://localhost:3000/usuario/login', { email, password });
-
+      //const { data } = await axios.post('http://localhost:3000/usuario/login', { email, password });
+      const { data } = await axios.post('/usuario/login', { email, password });
       // Guarda el token y el usuario en localStorage
       localStorage.setItem('token', data.token);
       localStorage.setItem('usuario', JSON.stringify(data.usuario));
@@ -41,16 +41,16 @@ const Login = () => {
   const validarDatos = () => {
     let errors = { email: '', password: '' };
     let isValid = true;
+    const passwordValido = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&]{8,20}$/;
     
     if (!(/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+/.test(email))) {
         errors.email = 'Correo no válido o vacio';
         isValid = false;
     }
-    if (!password|| password.length < 3 || password.length > 20 || /^\s+$/.test(password)) {
-        errors.password = 'Password no válido o vacio';
-        isValid = false;
-
-    }
+    if (!passwordValido.test(password)) {
+      errors.password = 'La contraseña debe tener al menos 8 caracteres y menor a 20, una mayúscula, una minúscula, un número y un carácter especial @$!%*?&_- ';
+      isValid = false;
+  }
 
     setFormErrors(errors); // Actualizar los errores en el estado
     return isValid;

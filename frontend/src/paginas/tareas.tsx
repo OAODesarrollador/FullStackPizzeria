@@ -24,7 +24,8 @@ const Tareas = () => {
     const token = localStorage.getItem('token');
     console.log(estado, id);
     await axios.put(
-      `http://localhost:3000/tarea/${id}`,
+      //`http://localhost:3000/tarea/${id}`,
+      `/tarea/${id}`,
       { estado },
       { headers: { Authorization: `Bearer ${token}` } }
     );

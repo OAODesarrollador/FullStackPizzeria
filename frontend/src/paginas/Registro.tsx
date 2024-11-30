@@ -26,7 +26,8 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
             return; // Si la validación falla, no continuar
         }
     try {
-      const response = await axios.post('http://localhost:3000/usuario/registro', { nombre, email: emailFromLogin, password, rol });
+      //const response = await axios.post('http://localhost:3000/usuario/registro', { nombre, email: emailFromLogin, password, rol });
+      const response = await axios.post('/usuario/registro', { nombre, email: emailFromLogin, password, rol });
       alert(`Usuario registrado! ${response.data}`);
       if (onClose) {
         onClose(); 
@@ -51,8 +52,7 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
         isValid = false;
     }
     if (!passwordValido.test(password)) {
-        console.log('contrasena no valida', password);
-        errors.password = 'La contraseña debe tener al menos 8 caracteres y menor a 20, una mayúscula, una minúscula, un número y un carácter especial. ';
+        errors.password = 'La contraseña debe tener al menos 8 caracteres y menor a 20, una mayúscula, una minúscula, un número y un carácter especial @$!%*?&_- ';
         isValid = false;
     }
 
