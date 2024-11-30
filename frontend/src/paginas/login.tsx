@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Form, Button, Row, Col, Modal } from 'react-bootstrap';
-import axios from 'axios';
+//import axios from 'axios';
+import axios from '../servicio/api';
 import '../paginas/Estilos/login.css';
 import Registro from './Registro'; // Importa el componente Registro
 

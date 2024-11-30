@@ -6,6 +6,16 @@ import * as usuarioRoutes from './Rutas/usuarioRoutes';
 import * as tareaRoutes from './Rutas/tareaRoutes';
 import * as pedidoRoutes from './Rutas/pedidoRoutes';
 
+//// Configuración de CORS
+const corsOptions = {
+    origin: 'https://fullstackpizzeria-front.onrender.com', // Cambia esto por la URL de tu frontend en Render
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+};
+
+app.use(cors(corsOptions));
+/// fin cors
+
 dotenv.config();
 const app = express();
 const prisma = new PrismaClient();

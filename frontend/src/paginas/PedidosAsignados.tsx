@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {  Button, Row, Col, Container, Modal } from 'react-bootstrap';
-import axios from 'axios';
+//import axios from 'axios';
+import axios from '../servicio/api';
 import { FaCheck, FaExclamationCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import '../paginas/Estilos/ListaPedidos.css';

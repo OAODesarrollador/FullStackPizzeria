@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
+import axios from '../servicio/api';
 import {  useLocation } from 'react-router-dom';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { FaUser, FaEnvelope, FaLock, FaUserTag } from 'react-icons/fa'; 
@@ -36,7 +37,7 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
     }
   };
   const validateForm = () => {
-    const passwordValido = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+    const passwordValido = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&]{8,20}$/;
     let errors = { nombre: '', email: '', password: '', rol: '' };
     let isValid = true;
    
@@ -50,6 +51,7 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
         isValid = false;
     }
     if (!passwordValido.test(password)) {
+        console.log('contrasena no valida', password);
         errors.password = 'La contraseña debe tener al menos 8 caracteres y menor a 20, una mayúscula, una minúscula, un número y un carácter especial. ';
         isValid = false;
     }

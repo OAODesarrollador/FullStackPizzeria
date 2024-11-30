@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
+import api from '../servicio/api';
 import '../paginas/Estilos/ListaPedidos.css';
 import { Button, Modal, Col, Row, Container } from 'react-bootstrap';
 import {  useNavigate } from 'react-router-dom';
@@ -37,7 +38,8 @@ const ListaPedidos: React.FC = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:3000/pedido/verPedidos', {
+        //const response = await axios.get('http://localhost:3000/pedido/verPedidos', {
+          const response = await api.get('/pedido/verPedidos', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setPedidos(response.data);
@@ -48,7 +50,8 @@ const ListaPedidos: React.FC = () => {
 
     const fetchRepartidores = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/usuario/repartidores');
+        //const response = await axios.get('http://localhost:3000/usuario/repartidores');
+        const response = await api.get('/usuario/repartidores');
         setRepartidores(response.data);
       } catch (error) {
         console.error('Error al obtener repartidores:', error);
@@ -85,8 +88,9 @@ const ListaPedidos: React.FC = () => {
       for (const pedido of pedidos) {
         // Solo actualizar pedidos que tengan un repartidor asignado
         if (pedido.usuarioId) {
-          await axios.put(
-            `http://localhost:3000/pedido/asignarRepartidor`,
+          //await axios.put(
+          await api.put(
+            `/pedido/asignarRepartidor`,
             { idPedido: pedido.id, usuarioId: pedido.usuarioId },
             { headers: { Authorization: `Bearer ${token}` } }
           );

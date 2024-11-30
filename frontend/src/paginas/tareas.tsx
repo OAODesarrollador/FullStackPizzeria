@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Container, Table, Button } from 'react-bootstrap';
-import axios from 'axios';
+//import axios from 'axios';
+import axios from '../servicio/api';
 
 const Tareas = () => {
   const [tareas, setTareas] = useState<Array<any>>([]);

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Container, Form, Button, Modal, Row, Col } from 'react-bootstrap';
-import axios from 'axios';
+//import axios from 'axios';
+import api from '../servicio/api';
 import { useNavigate } from 'react-router-dom';
 import { useCarrito } from '../componentes/Carrito';
 import '../paginas/Estilos/Checkout.css';
@@ -39,7 +40,8 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
       const direccionEnvio = (document.getElementById('direccionEnvio') as HTMLInputElement).value;
       const descripcion = carrito.map((producto) => `${producto.nombre} - $${producto.precio}`).join(', ');
 
-      await axios.post('http://localhost:3000/pedido/crearPedido', {
+      //await api.post('http://localhost:3000/pedido/crearPedido', {
+      await api.post('/pedido/crearPedido', {
         descripcion,
         total,
         repartidorId: 1,
