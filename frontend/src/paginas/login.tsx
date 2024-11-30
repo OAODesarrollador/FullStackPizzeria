@@ -12,6 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [modalRegistro, setmodalRegistro] = useState(false);
   const [formErrors, setFormErrors] = useState({ email: '', password: '' });
+  const [verpassword, setVerpassword] = useState(false);
   const manejarLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validarDatos()) {
@@ -77,13 +78,18 @@ const Login = () => {
         <Form.Group controlId="formBasicPassword" className="mt-3">
           <Form.Label>Contraseña</Form.Label>
           <Form.Control
-            type="password"
+            type={verpassword ? 'text' : 'password'}
             placeholder="Ingresa tu contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="off"
-            
           />
+          <Button 
+                variant="outline-secondary" 
+                onClick={() => setVerpassword(!verpassword)} // Cambia el estado al hacer clic
+              >
+                {verpassword ? 'Ocultar' : 'Mostrar'} {/* Cambia el texto del botón */}
+              </Button>
           {formErrors.password?.trim() && <p className="msjError">{formErrors.password}</p>} {/* Mensaje de error */}
         </Form.Group>
 
