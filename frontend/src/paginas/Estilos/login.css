@@ -25,3 +25,10 @@
     color: rgb(233, 178, 178);
     
   }
+
+.btnVerPassword {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: none;
+  }

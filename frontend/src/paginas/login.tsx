@@ -5,6 +5,7 @@ import { Container, Form, Button, Row, Col, Modal } from 'react-bootstrap';
 import axios from '../servicio/api';
 import '../paginas/Estilos/login.css';
 import Registro from './Registro'; // Importa el componente Registro
+import { FaEyeSlash, FaEye } from 'react-icons/fa';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -76,22 +77,26 @@ const Login = () => {
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword" className="mt-3">
-          <Form.Label>Contraseña</Form.Label>
-          <Form.Control
-            type={verpassword ? 'text' : 'password'}
-            placeholder="Ingresa tu contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="off"
-          />
-          <Button 
+            <Form.Label>Contraseña</Form.Label>
+            <div className="input-group">
+              <Form.Control
+                type={verpassword ? 'text' : 'password'}
+                placeholder="Ingresa tu contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="off"
+              />
+              <Button 
+                className="btnVerPassword"
                 variant="outline-secondary" 
-                onClick={() => setVerpassword(!verpassword)} // Cambia el estado al hacer clic
+                onClick={() => setVerpassword(!verpassword)}
+                
               >
-                {verpassword ? 'Ocultar' : 'Mostrar'} {/* Cambia el texto del botón */}
+                {verpassword ?  <FaEye /> : <FaEyeSlash />}
               </Button>
-          {formErrors.password?.trim() && <p className="msjError">{formErrors.password}</p>} {/* Mensaje de error */}
-        </Form.Group>
+            </div>
+            {formErrors.password?.trim() && <p className="msjError">{formErrors.password}</p>}
+          </Form.Group>
 
         <Row className="mt-4 ">
           <Col className="text-center">

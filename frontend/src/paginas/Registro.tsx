@@ -5,7 +5,7 @@ import {  useLocation } from 'react-router-dom';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { FaUser, FaEnvelope, FaLock, FaUserTag } from 'react-icons/fa'; 
 import '../paginas/Estilos/Registro.css';
-
+import { FaEyeSlash, FaEye } from 'react-icons/fa'; // Importa los iconos {FaEyeSlash,<FaEye}
 interface RegistroProps {
   onClose?: () => void; // Propiedad opcional para cerrar el modal
 }
@@ -14,6 +14,7 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
   const [password, setPassword] = useState('');
   const [rol, setRol] = useState('REPARTIDOR');
   const location = useLocation();
+  const [verPassword, setVerPassword] = useState(false);
 
   // Obtener el email desde la ubicación (state) del componente
   const initialEmail = location.state?.email || '';
@@ -88,18 +89,28 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
              {formErrors.email?.trim() && <p className="msjError">{formErrors.email}</p>} {/* Mensaje de error */}
           </Form.Group>
 
-          <Form.Group controlId="password" className="mt-3">
+          <Form.Group controlId="formBasicPassword" className="mt-3">
           <Form.Label><FaLock  /> Contraseña</Form.Label>
-
+          <div className="input-group">
             <Form.Control 
-              type="password" 
+              type={verPassword ? 'text' : 'password'} 
               placeholder="Crea una contraseña" 
               value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="off" 
             />
+            <Button 
+              className='btnVerPassword'
+              variant="outline-secondary" 
+              onClick={() => setVerPassword(!verPassword)}
+              
+              >
+              {verPassword ?  <FaEye /> : <FaEyeSlash />}
+            </Button>
+          </div>
              {formErrors.password?.trim() && <p className="msjError">{formErrors.password}</p>} {/* Mensaje de error */}
           </Form.Group>
-
+          
           <Form.Group controlId="rol" className="mt-3">
             <Form.Label><FaUserTag  /> Rol</Form.Label>
             <Form.Select 
