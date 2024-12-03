@@ -83,7 +83,7 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
 
   
   const handleClose = () => setavisoModal(false);
-  //const handleClose2 = () => setvacioModal(false);
+  
   return (
     <>
     

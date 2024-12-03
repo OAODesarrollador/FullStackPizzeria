@@ -1,0 +1,3 @@
+DATABASE_URL="postgresql://oky:123456@localhost:5432/pizzeria"
+JWT_SECRET="mi_super_secreto"
+REACT_APP_API_URL=https://fullstackpizzeria.onrender.com/

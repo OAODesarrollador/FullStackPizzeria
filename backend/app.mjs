@@ -8,7 +8,7 @@ import * as pedidoRoutes from './Rutas/pedidoRoutes';
 
 //// Configuración de CORS
 const corsOptions = {
-    origin: 'https://fullstackpizzeria-front.onrender.com', // Cambia esto por la URL de tu frontend en Render
+    origin: 'https://fullstackpizzeria-front.onrender.com', // Cambiar esto por la URL del frontend en Render
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
 };

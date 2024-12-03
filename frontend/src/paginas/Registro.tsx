@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 //import axios from 'axios';
 import axios from '../servicio/api';
 import {  useLocation } from 'react-router-dom';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
-import { FaUser, FaEnvelope, FaLock, FaUserTag } from 'react-icons/fa'; 
+import { Container, Form, Button, Row, Col ,Modal} from 'react-bootstrap';
+import { FaUser, FaEnvelope, FaLock, FaUserTag, FaExclamationCircle, FaEyeSlash, FaEye, FaCheck  } from 'react-icons/fa'; 
 import '../paginas/Estilos/Registro.css';
-import { FaEyeSlash, FaEye } from 'react-icons/fa'; // Importa los iconos {FaEyeSlash,<FaEye}
+
 interface RegistroProps {
   onClose?: () => void; // Propiedad opcional para cerrar el modal
 }
@@ -20,6 +20,11 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
   const initialEmail = location.state?.email || '';
   const [emailFromLogin, setEmailFromLogin] = useState(initialEmail);
   const [formErrors, setFormErrors] = useState({ nombre: '', email: '', password: '', rol: '' });
+  const [avisoModal, setavisoModal] = useState(false);
+  const [mensajeModal, setMensajeModal] = useState('');
+  const [mensajeTitulo, setmensajeTitulo] = useState('');
+  const [colorFondo, setColorFondo] = useState('');
+  const [iconoModal, setIconoModal] = useState<React.ReactNode | null>(null);
 
   const handleRegistro = async () => {
     validateForm();
@@ -29,13 +34,21 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
     try {
       //const response = await axios.post('http://localhost:3000/usuario/registro', { nombre, email: emailFromLogin, password, rol });
       const response = await axios.post('/usuario/registro', { nombre, email: emailFromLogin, password, rol });
-      alert(`Usuario registrado! ${response.data}`);
-      if (onClose) {
-        onClose(); 
-      }
+      setmensajeTitulo('');
+      setMensajeModal(`Registro Exitoso de ${response.data.nombre}`);
+      setColorFondo('green');
+      setIconoModal(<FaCheck />);
+      setavisoModal(true);
+      setTimeout(() => {
+        setavisoModal(false);
+      },2500)
     } catch (error) {
-      console.error('Error en el registro', error);
-      alert('Error en el registro');
+      setmensajeTitulo('ATENCIÓN ');
+      setMensajeModal('Error en el registro');
+      setColorFondo('red');
+      setIconoModal(<FaExclamationCircle />);
+      setavisoModal(true);
+      
     }
   };
   const validateForm = () => {
@@ -60,6 +73,8 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
     setFormErrors(errors); // Actualizar los errores en el estado
     return isValid;
 };
+
+const handleClose = () => setavisoModal(false);
   return (
     <div className='fondo'>
     <Container className="d-flex justify-content-center align-items-center min-vh-100 containerLogin ">
@@ -147,6 +162,19 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
 
       </div>
     </Container>
+    <Modal show={avisoModal} onHide={handleClose } centered >
+        <Modal.Header style={{ backgroundColor: colorFondo, color: "white", display: "flex", justifyContent: "center", alignItems: "center" }} >
+          <Modal.Title style={{color:"white"}}>{mensajeTitulo} {' '} {iconoModal}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {mensajeModal}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
