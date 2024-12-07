@@ -26,7 +26,7 @@ const Login = () => {
       // Guarda el token y el usuario en localStorage
       localStorage.setItem('token', data.token);
       localStorage.setItem('usuario', JSON.stringify(data.usuario));
-      console.log(data);
+      console.log('datos:',data);
       // Redirige según el rol del usuario
       if (data.usuario.rol === 'SUPERVISOR') {
         navigate('/ListaPedidos');
