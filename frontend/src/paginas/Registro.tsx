@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 //import axios from 'axios';
-import axios from '../servicio/api';
+import api from '../servicio/api';
 import {  useLocation } from 'react-router-dom';
 import { Container, Form, Button, Row, Col ,Modal} from 'react-bootstrap';
 import { FaUser, FaEnvelope, FaLock, FaUserTag, FaExclamationCircle, FaEyeSlash, FaEye, FaCheck  } from 'react-icons/fa'; 
@@ -33,7 +33,7 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
         }
     try {
       //const response = await axios.post('http://localhost:3000/usuario/registro', { nombre, email: emailFromLogin, password, rol });
-      const response = await axios.post('/usuario/registro', { nombre, email: emailFromLogin, password, rol });
+      const response = await api.post('/usuario/registro', { nombre, email: emailFromLogin, password, rol });
       setmensajeTitulo('');
       setMensajeModal(`Registro Exitoso de ${response.data.nombre}`);
       setColorFondo('green');
