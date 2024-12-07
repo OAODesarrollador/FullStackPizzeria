@@ -18,6 +18,12 @@ export const registrarUsuario = async (req, res) => {
                 rol,
             },
         });
+        console.log('Nuevo usuario registrado:', {
+            id: nuevoUsuario.id,
+            nombre: nuevoUsuario.nombre,
+            email: nuevoUsuario.email,
+            rol: nuevoUsuario.rol,
+        });
         res.json(nuevoUsuario);
     }
     catch (error) {

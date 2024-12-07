@@ -25,7 +25,7 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
   const [mensajeTitulo, setmensajeTitulo] = useState('');
   const [colorFondo, setColorFondo] = useState('');
   const [iconoModal, setIconoModal] = useState<React.ReactNode | null>(null);
-
+  console.log(process.env.REACT_APP_BACKEND_URL);
   const handleRegistro = async () => {
     validateForm();
         if (!validateForm()) {
