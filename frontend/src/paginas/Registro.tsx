@@ -32,7 +32,10 @@ const Registro: React.FC<RegistroProps> = ({ onClose }) => {
             return; // Si la validación falla, no continuar
         }
     try {
+      console.log('Backend URL:', process.env.REACT_APP_BACKEND_URL);
+
       //const response = await axios.post('http://localhost:3000/usuario/registro', { nombre, email: emailFromLogin, password, rol });
+      
       const response = await api.post('/usuario/registro', { nombre, email: emailFromLogin, password, rol });
       setmensajeTitulo('');
       setMensajeModal(`Registro Exitoso de ${response.data.nombre}`);
