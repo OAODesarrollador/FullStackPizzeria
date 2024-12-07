@@ -4,5 +4,7 @@ const api = axios.create({
     //baseURL: process.env.REACT_APP_BACKEND_URL 
     baseURL: 'https://fullstackpizzeria-back.onrender.com'
 });
-console.log('Backend URL:', process.env.REACT_APP_BACKEND_URL);
+// En cualquier componente o archivo de configuración
+console.log('Entire process.env:', process.env);
+console.log('Specific env var:', process.env.REACT_APP_BACKEND_URL);
 export default api;
