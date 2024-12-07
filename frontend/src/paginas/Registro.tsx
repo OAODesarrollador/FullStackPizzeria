@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-//import axios from 'axios';
 import api from '../servicio/api';
 import {  useLocation } from 'react-router-dom';
 import { Container, Form, Button, Row, Col ,Modal} from 'react-bootstrap';

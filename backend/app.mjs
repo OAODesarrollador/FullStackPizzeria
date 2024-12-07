@@ -7,14 +7,35 @@ import * as tareaRoutes from './Rutas/tareaRoutes';
 import * as pedidoRoutes from './Rutas/pedidoRoutes';
 
 //// Configuración de CORS
+//const corsOptions = {
+//    origin: 'https://fullstackpizzeria-front.onrender.com', // Cambiar esto por la URL del frontend en Render
+//    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//    credentials: true,
+//};
+
+//app.use(cors(corsOptions));
+import express from 'express';
+import cors from 'cors';
+
+
+
+// Configuración de CORS
 const corsOptions = {
-    origin: 'https://fullstackpizzeria-front.onrender.com', // Cambiar esto por la URL del frontend en Render
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
+  origin: [
+    'https://fullstackpizzeria-front.onrender.com', // Tu URL de frontend
+    'http://localhost:3000' // Para desarrollo local
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 };
 
 app.use(cors(corsOptions));
+
+
+
 /// fin cors
+
 
 dotenv.config();
 const app = express();
