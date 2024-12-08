@@ -65,7 +65,15 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
       }, 2500);
     } catch (error) {
       console.error('Error al realizar el pedido:', error);
-      alert('Ocurrió un error al realizar el pedido. Inténtalo de nuevo más tarde.');
+      setMensajeModal('Ocurrió un error al realizar el pedido. Inténtalo de nuevo más tarde.'); // Mensaje al vaciar el carrito
+      setmensajeTitulo('UPS !');
+      setColorFondo('red');
+      setIconoModal(<FaExclamationCircle/>);
+      setavisoModal(true);
+      setTimeout(() => {
+        setavisoModal(false);
+      }, 2500);
+      
     }
   };
 

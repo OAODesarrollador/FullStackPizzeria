@@ -25,6 +25,6 @@ Debe realizarce dentro de la capeta frontend.
 
 El mismo está alojado en Render, tine la parte Frontend como página estática, el backend como Web Service, y usa PostgreSQL de Render como base de datos. Puedes verlo en la siguiente URL:
 
-(https://fullstackpizzeria-front.onrender.com/)
+https://fullstackpizzeria-front.onrender.com/
 
 ## Este proyecto se encuentra en desarrollo

@@ -5,7 +5,8 @@ import { Container, Form, Button, Row, Col, Modal } from 'react-bootstrap';
 import axios from '../servicio/api';
 import '../paginas/Estilos/login.css';
 import Registro from './Registro'; // Importa el componente Registro
-import { FaEyeSlash, FaEye } from 'react-icons/fa';
+import { FaEyeSlash, FaEye, FaCheck, FaExclamationCircle } from 'react-icons/fa';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -14,6 +15,12 @@ const Login = () => {
   const [modalRegistro, setmodalRegistro] = useState(false);
   const [formErrors, setFormErrors] = useState({ email: '', password: '' });
   const [verpassword, setVerpassword] = useState(false);
+  const [mensajeModal, setMensajeModal] = useState('');
+  const [mensajeTitulo, setmensajeTitulo] = useState('');
+  const [colorFondo, setColorFondo] = useState('');
+  const [iconoModal, setIconoModal] = useState<React.ReactNode | null>(null);
+  const [avisoModal, setavisoModal] = useState(false);
+
   const manejarLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validarDatos()) {
@@ -33,11 +40,28 @@ const Login = () => {
       } else if (data.usuario.rol === 'REPARTIDOR') {
         navigate(`/PedidosRepartidor/${data.usuario.id}`);
       } else {
-        alert('Rol de usuario desconocido.');
+        
+        setmensajeTitulo('ATENCIÓN');
+        setMensajeModal('Rol de usuario desconocido.');
+        setColorFondo('red');
+        setIconoModal(<FaExclamationCircle/>);
+        setavisoModal(true);
+        setTimeout(() => {
+        setavisoModal(false);
+          }, 2500);
+        
       }
     } catch (error) {
       console.log('Error en el login', error);
-      alert('Error en el login, revisa tus credenciales');
+      setmensajeTitulo('ATENCIÓN');
+      setMensajeModal('Error en el login, revisa tus credenciales');
+      setColorFondo('red');
+      setIconoModal(<FaExclamationCircle/>);
+      setavisoModal(true);
+      setTimeout(() => {
+        setavisoModal(false);
+      }, 2500);
+      
     }
   };
 
@@ -59,6 +83,7 @@ const Login = () => {
     return isValid;
 };
 
+const handleClose = () => setavisoModal(false);
   return (
     <>
     <Container className="containerLogin d-flex flex-column align-items-center justify-content-center">
@@ -114,6 +139,19 @@ const Login = () => {
     </Container>
     <Modal show={modalRegistro} onHide={() => setmodalRegistro(false)} size="lg" centered> 
       <Registro onClose={() => setmodalRegistro(false)} /> {/* Pasa la función para cerrar el modal */}
+    </Modal>
+    <Modal show={avisoModal} onHide={handleClose } centered >
+        <Modal.Header style={{ backgroundColor: colorFondo, color: "white", display: "flex", justifyContent: "center", alignItems: "center" }} >
+          <Modal.Title style={{color:"white"}}>{mensajeTitulo} {' '} {iconoModal}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {mensajeModal}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
     </Modal>
     </>
   );
